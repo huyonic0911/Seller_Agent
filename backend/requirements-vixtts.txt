@@ -1,0 +1,18 @@
+# === Phụ thuộc cho TTS_ENGINE=vixtts (voice cloning) ===
+# Combo đã kiểm chứng chạy được trên RTX 5060 (Blackwell) + Python 3.12.
+#
+# THỨ TỰ CÀI:
+# 1) PyTorch CUDA 12.8 (Blackwell/sm_120):
+#      uv pip install --python .venv torch torchaudio --index-url https://download.pytorch.org/whl/cu128
+# 2) File này:
+#      uv pip install --python .venv -r requirements-vixtts.txt
+# 3) FFmpeg HỆ THỐNG (torchcodec cần libav*): sudo apt install ffmpeg
+# 4) Model: snapshot_download('capleaf/viXTTS', local_dir='models/viXTTS')
+
+coqui-tts>=0.27              # fork được bảo trì của Coqui TTS (chứa XTTS)
+transformers>=4.57,<5        # 4.57.x có cả is_torch_greater_or_equal VÀ isin_mps_friendly; 5.x gỡ isin -> lỗi
+torchcodec>=0.14             # audio IO cho torch>=2.9 (cần FFmpeg hệ thống)
+soundfile>=0.12
+huggingface_hub>=0.23
+num2words>=0.5.14            # đọc số tiếng Việt trong bản vá tokenizer 'vi'
+# vinorm: KHÔNG dùng trên Python 3.12+ (cần module 'imp' đã bị xoá) — num2words đã lo phần số.

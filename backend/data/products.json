@@ -1,0 +1,68 @@
+{
+  "shop": {
+    "name": "Shop Xinh Store",
+    "policies": {
+      "ship": "Freeship đơn từ 300k. Nội thành giao trong 2 ngày, tỉnh 3-5 ngày.",
+      "doi_tra": "Đổi trả trong 7 ngày nếu lỗi nhà sản xuất, còn tem mác.",
+      "thanh_toan": "COD (thanh toán khi nhận hàng) hoặc chuyển khoản."
+    }
+  },
+  "products": [
+    {
+      "id": "SP001",
+      "ten": "Áo thun cotton unisex",
+      "gia": 149000,
+      "gia_km": 119000,
+      "mau": ["trắng", "đen", "be", "xanh navy"],
+      "size": ["S", "M", "L", "XL"],
+      "ton_kho": 120,
+      "mo_ta": "Áo thun cotton 100%, form rộng thoải mái, thấm hút mồ hôi tốt.",
+      "faq": [
+        "Size M mặc vừa người 55-65kg.",
+        "Chất cotton dày dặn, không xù lông sau khi giặt."
+      ]
+    },
+    {
+      "id": "SP002",
+      "ten": "Quần jean nữ ống suông",
+      "gia": 320000,
+      "gia_km": 259000,
+      "mau": ["xanh nhạt", "xanh đậm", "đen"],
+      "size": ["27", "28", "29", "30"],
+      "ton_kho": 45,
+      "mo_ta": "Quần jean nữ lưng cao ống suông, tôn dáng, vải co giãn nhẹ.",
+      "faq": [
+        "Size 28 phù hợp eo 70-72cm.",
+        "Vải dày vừa, không bai, mặc được cả 4 mùa."
+      ]
+    },
+    {
+      "id": "SP003",
+      "ten": "Túi tote canvas",
+      "gia": 99000,
+      "gia_km": 79000,
+      "mau": ["kem", "đen"],
+      "size": ["Freesize"],
+      "ton_kho": 8,
+      "mo_ta": "Túi tote vải canvas dày, đựng được laptop 14 inch, in hình tối giản.",
+      "faq": [
+        "Túi có khóa kéo bên trong, chống rơi đồ.",
+        "Sắp hết hàng, chỉ còn số lượng ít."
+      ]
+    },
+    {
+      "id": "SP004",
+      "ten": "Giày sneaker trắng",
+      "gia": 450000,
+      "gia_km": 399000,
+      "mau": ["trắng"],
+      "size": ["36", "37", "38", "39", "40", "41", "42"],
+      "ton_kho": 0,
+      "mo_ta": "Giày sneaker trắng basic, đế cao su êm chân, dễ phối đồ.",
+      "faq": [
+        "Hiện đang hết hàng, dự kiến về hàng sau 1 tuần.",
+        "Nên chọn tăng 1 size nếu chân to bề ngang."
+      ]
+    }
+  ]
+}

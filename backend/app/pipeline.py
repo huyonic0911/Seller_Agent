@@ -1,0 +1,128 @@
+"""Answer pipeline: đọc comment từ hàng đợi → Claude → TTS → broadcast tới màn live.
+
+`StreamHub` quản lý các client WebSocket đang xem live (frontend). `AnswerPipeline`
+là worker asyncio xử lý tuần tự từng comment (mô phỏng người bán trả lời từng câu).
+"""
+from __future__ import annotations
+
+import asyncio
+import base64
+import json
+import logging
+from typing import Any
+
+from fastapi import WebSocket
+
+from .comment_source import Comment, CommentSource
+from .llm import SellerBrain
+from .tts import TTSEngine
+
+logger = logging.getLogger("seller_agent.pipeline")
+
+
+class StreamHub:
+    """Quản lý và broadcast tới các client đang xem live."""
+
+    def __init__(self) -> None:
+        self._clients: set[WebSocket] = set()
+        self._lock = asyncio.Lock()
+
+    async def connect(self, ws: WebSocket) -> None:
+        await ws.accept()
+        async with self._lock:
+            self._clients.add(ws)
+
+    async def disconnect(self, ws: WebSocket) -> None:
+        async with self._lock:
+            self._clients.discard(ws)
+
+    async def broadcast(self, message: dict[str, Any]) -> None:
+        data = json.dumps(message, ensure_ascii=False)
+        async with self._lock:
+            targets = list(self._clients)
+        dead: list[WebSocket] = []
+        for ws in targets:
+            try:
+                await ws.send_text(data)
+            except Exception:
+                dead.append(ws)
+        if dead:
+            async with self._lock:
+                for ws in dead:
+                    self._clients.discard(ws)
+
+
+class AnswerPipeline:
+    def __init__(
+        self,
+        source: CommentSource,
+        brain: SellerBrain,
+        tts: TTSEngine,
+        hub: StreamHub,
+    ) -> None:
+        self.source = source
+        self.brain = brain
+        self.tts = tts
+        self.hub = hub
+        self._task: asyncio.Task | None = None
+
+    def start(self) -> None:
+        if self._task is None:
+            self._task = asyncio.create_task(self._run())
+
+    async def stop(self) -> None:
+        if self._task:
+            self._task.cancel()
+            try:
+                await self._task
+            except asyncio.CancelledError:
+                pass
+            self._task = None
+
+    async def _run(self) -> None:
+        while True:
+            comment = await self.source.get()
+            try:
+                await self._handle(comment)
+            except Exception:  # không để 1 lỗi làm chết worker
+                logger.exception("Lỗi khi xử lý comment: %s", comment.text)
+                await self.hub.broadcast(
+                    {
+                        "type": "error",
+                        "comment": comment.text,
+                        "author": comment.author,
+                        "message": "Xin lỗi, có lỗi khi xử lý câu hỏi này.",
+                    }
+                )
+
+    async def _handle(self, comment: Comment) -> None:
+        # 1. Báo cho màn live biết đang có câu hỏi được xử lý
+        await self.hub.broadcast(
+            {"type": "comment", "author": comment.author, "text": comment.text, "ts": comment.ts}
+        )
+
+        # 2. Gọi Claude sinh câu trả lời
+        reply = await self.brain.answer(comment.text, author=comment.author)
+        if not reply:
+            reply = "Dạ cả nhà chờ shop chút xíu nha!"
+
+        # 3. TTS → audio base64
+        audio_b64 = ""
+        try:
+            audio = await self.tts.synthesize(reply)
+            if audio:
+                audio_b64 = base64.b64encode(audio).decode("ascii")
+        except Exception:
+            logger.exception("Lỗi TTS")
+
+        # 4. Đẩy câu trả lời + audio về màn live để đọc & nhép miệng
+        await self.hub.broadcast(
+            {
+                "type": "reply",
+                "author": comment.author,
+                "comment": comment.text,
+                "text": reply,
+                "audio": audio_b64,
+                "audio_format": self.tts.audio_format,
+            }
+        )

@@ -1,0 +1,54 @@
+# ─── Python (backend) ───────────────────────────────
+backend/.venv/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env / secrets (giữ lại *.env.example)
+.env
+*.env
+!*.env.example
+backend/.env
+
+# ─── TTS: binary + voice/model (tải theo README, không commit) ───
+backend/piper/
+backend/piper.tar.gz
+backend/voices/
+backend/models/
+*.onnx
+*.onnx.json
+
+# Audio (giọng tham chiếu, output debug — nặng, không commit)
+*.wav
+*.mp3
+*.flac
+backend/data/*.wav
+backend/debug_*_out.wav
+
+# ─── Node (frontend) ────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Live2D models (binary/proprietary — không commit)
+frontend/public/models/*/
+
+# ─── IDE / OS ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.swp
