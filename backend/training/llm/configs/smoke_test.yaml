@@ -1,0 +1,27 @@
+# Config SMOKE-TEST: chỉ để kiểm tra code train chạy được (tập nhỏ, 1 epoch).
+# KHÔNG dùng để train thật.
+base_model: unsloth/Qwen3-8B
+max_seq_length: 2048
+load_in_4bit: true
+
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+train_file: training/data/smoke/train.jsonl
+eval_file: training/data/smoke/eval.jsonl
+output_dir: training/data/adapters/smoke-test
+
+epochs: 1
+learning_rate: 0.0002
+per_device_batch_size: 1
+grad_accum: 4
+warmup_ratio: 0.03
+lr_scheduler: cosine
+optim: adamw_8bit
+neftune_noise_alpha: 5
+logging_steps: 2
+eval_steps: 20
+save_steps: 1000
+seed: 42

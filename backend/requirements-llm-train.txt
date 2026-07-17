@@ -1,0 +1,18 @@
+# Phụ thuộc cho fine-tune LLM (Qwen3) trên 1×A6000 (48GB) — TÁCH khỏi runtime.
+# Cài trên máy GPU riêng, không dùng cho serving:
+#   pip install -r requirements-llm-train.txt
+# Lưu ý: cài torch theo đúng CUDA của máy trước (vd cu121), rồi mới cài unsloth.
+
+unsloth                 # QLoRA/LoRA nhanh, single-GPU, export GGUF/Ollama
+trl>=0.9                # SFTTrainer + SFTConfig
+transformers>=4.44
+datasets>=2.20
+peft>=0.12
+accelerate>=0.33
+bitsandbytes>=0.43      # QLoRA 4-bit
+sentencepiece
+pyyaml                  # đọc config train
+
+# Sinh data & judge (teacher = Claude, endpoint eval = OpenAI-compatible)
+anthropic>=0.69
+openai>=1.40

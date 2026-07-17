@@ -44,8 +44,9 @@ Phong cách nói chuyện:
 
 # Model mặc định theo từng nhà cung cấp
 _DEFAULT_MODEL = {
-    "qwen": "qwen2.5:7b",       # self-host qua Ollama (RTX 5060 8GB); hạ xuống qwen2.5:3b nếu chật
-    "openai": "qwen2.5:7b",     # bí danh: bất kỳ endpoint tương thích OpenAI
+    "qwen": "qwen2.5:7b",         # self-host qua Ollama (RTX 5060 8GB); hạ xuống qwen2.5:3b nếu chật
+    "openai": "qwen2.5:7b",       # bí danh: bất kỳ endpoint tương thích OpenAI
+    "finetuned": "seller-qwen3:8b",  # model đã fine-tune (Ollama-GGUF hoặc vLLM); endpoint OpenAI-compatible
     "anthropic": "claude-opus-4-8",
     "offline": "offline",
 }
@@ -99,6 +100,15 @@ class Settings:
     # Dữ liệu
     products_path: Path = field(
         default_factory=lambda: Path(os.getenv("PRODUCTS_PATH", str(BASE_DIR / "data" / "products.json")))
+    )
+
+    # Ghi log tương tác (comment→reply) để thu thập dữ liệu fine-tune vòng sau.
+    # Bật INTERACTION_LOG=1 để lưu JSONL vào INTERACTION_LOG_DIR (mặc định logs/interactions).
+    interaction_log: bool = field(default_factory=lambda: _get_bool("INTERACTION_LOG", False))
+    interaction_log_dir: Path = field(
+        default_factory=lambda: Path(
+            os.getenv("INTERACTION_LOG_DIR", str(BASE_DIR / "logs" / "interactions"))
+        )
     )
 
     # Persona

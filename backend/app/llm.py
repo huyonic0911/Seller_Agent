@@ -15,6 +15,7 @@ import logging
 
 from .config import settings
 from .products import ProductStore
+from .prompt import build_system_text, build_user_text
 
 logger = logging.getLogger("seller_agent.llm")
 
@@ -29,25 +30,20 @@ class SellerBrain:
         if self.provider == "anthropic" and not settings.anthropic_api_key:
             logger.warning("provider=anthropic nhưng thiếu ANTHROPIC_API_KEY → dùng offline.")
             self.provider = "offline"
-        elif self.provider not in {"qwen", "openai", "anthropic", "offline"}:
+        elif self.provider not in {"qwen", "openai", "finetuned", "anthropic", "offline"}:
             logger.warning("LLM_PROVIDER không hợp lệ: %s → dùng qwen.", self.provider)
             self.provider = "qwen"
 
         logger.info("LLM provider=%s model=%s", self.provider, settings.model)
 
-    # ---- Dựng prompt (dùng chung mọi provider) ---------------------------
+    # ---- Dựng prompt (dùng chung mọi provider + training) ----------------
+    # Ủy quyền cho app/prompt.py để prompt lúc serve KHỚP TUYỆT ĐỐI với lúc train.
     def _system_text(self) -> str:
         persona = settings.persona.format(shop_name=self.store.shop_name())
-        catalog = self.store.catalog_text()
-        return (
-            persona
-            + "\n\nDỮ LIỆU THAM CHIẾU (chỉ dùng đúng những gì có ở đây):\n"
-            + catalog
-            + "\n\nChỉ trả về câu trả lời cuối cùng để đọc trên live, không kèm giải thích."
-        )
+        return build_system_text(persona, self.store.catalog_text())
 
     def _user_text(self, comment: str, author: str | None) -> str:
-        return comment if not author else f"Khách '{author}' hỏi: {comment}"
+        return build_user_text(comment, author)
 
     # ---- Entry point ------------------------------------------------------
     async def answer(self, comment: str, author: str | None = None) -> str:

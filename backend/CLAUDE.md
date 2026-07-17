@@ -1,0 +1,1 @@
+An AI Virtual Assistant project that combined with three parts, including: LLM to generate answer for question, Vixtts for Text2Speech, and 2-3D anime girl modeling to interact with user.
