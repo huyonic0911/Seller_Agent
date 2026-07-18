@@ -14,6 +14,9 @@ from typing import Any
 from fastapi import WebSocket
 
 from core.comment_source import Comment, CommentSource
+from core.config import settings
+from core.emotion import infer_emotion
+from core.interaction_log import InteractionLogger
 from modules.llm.brain import SellerBrain
 from modules.vision.lipsync import audio_to_visemes
 from modules.voice.tts import TTSEngine
@@ -66,6 +69,19 @@ class AnswerPipeline:
         self.tts = tts
         self.hub = hub
         self._task: asyncio.Task | None = None
+        self._interactions = InteractionLogger(
+            settings.interaction_log, settings.interaction_log_dir
+        )
+
+    def log_feedback(
+        self,
+        comment: str,
+        reply: str,
+        verdict: str,
+        edited_reply: str | None = None,
+        author: str | None = None,
+    ) -> None:
+        self._interactions.log_feedback(comment, reply, verdict, edited_reply, author)
 
     def start(self) -> None:
         if self._task is None:
@@ -93,6 +109,7 @@ class AnswerPipeline:
                         "comment": comment.text,
                         "author": comment.author,
                         "message": "Xin lỗi, có lỗi khi xử lý câu hỏi này.",
+                        "emotion": "apologetic",
                     }
                 )
 
@@ -118,7 +135,10 @@ class AnswerPipeline:
         except Exception:
             logger.exception("Lỗi TTS")
 
-        # 4. Đẩy câu trả lời + audio + viseme về màn live để đọc & nhép miệng
+        # 4. Suy luận cảm xúc từ text để avatar đổi biểu cảm (không đụng prompt contract).
+        emotion = infer_emotion(reply)
+
+        # 5. Đẩy câu trả lời + audio + viseme + cảm xúc về màn live để đọc, nhép miệng & biểu cảm
         await self.hub.broadcast(
             {
                 "type": "reply",
@@ -128,5 +148,19 @@ class AnswerPipeline:
                 "audio": audio_b64,
                 "audio_format": self.tts.audio_format,
                 "visemes": visemes,
+                "emotion": emotion,
+            }
+        )
+
+        # 6. Ghi log tương tác (fire-and-forget) để thu data fine-tune vòng sau.
+        self._interactions.log(
+            {
+                "comment": comment.text,
+                "author": comment.author,
+                "ts": comment.ts,
+                "reply": reply,
+                "emotion": emotion,
+                "provider": self.brain.provider,
+                "model": settings.model,
             }
         )

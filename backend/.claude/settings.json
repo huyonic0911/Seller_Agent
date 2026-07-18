@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//data_hdd_16t/huydao1/projects/Seller_Agent/**)"
+    ]
+  }
+}

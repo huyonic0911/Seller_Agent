@@ -79,6 +79,29 @@ async def avatar():
     return get_avatar_config().to_dict()
 
 
+@app.post("/feedback")
+async def feedback(payload: dict):
+    """Admin chấm/sửa 1 reply để làm gold label cho fine-tune vòng sau.
+
+    Body: {"comment": "...", "reply": "...", "verdict": "good|bad|edited",
+           "edited_reply": "...", "author": "..."}
+    """
+    pipeline: AnswerPipeline = app.state.pipeline
+    comment = (payload or {}).get("comment", "").strip()
+    reply = (payload or {}).get("reply", "").strip()
+    verdict = (payload or {}).get("verdict", "").strip().lower()
+    if not comment or verdict not in {"good", "bad", "edited"}:
+        return {"ok": False, "error": "cần 'comment' và 'verdict' hợp lệ (good|bad|edited)."}
+    pipeline.log_feedback(
+        comment=comment,
+        reply=reply,
+        verdict=verdict,
+        edited_reply=(payload or {}).get("edited_reply") or None,
+        author=(payload or {}).get("author") or None,
+    )
+    return {"ok": True}
+
+
 @app.websocket("/ws/comments")
 async def ws_comments(ws: WebSocket):
     """Nhận comment giả lập từ AdminPanel: {"text": "...", "author": "..."}."""
