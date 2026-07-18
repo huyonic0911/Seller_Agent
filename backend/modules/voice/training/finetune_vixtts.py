@@ -5,13 +5,18 @@
 models/viXTTS/ (model.pth, config.json, vocab.json). Script tự tải thêm
 dvae.pth + mel_stats.pth từ base coqui/XTTS-v2 nếu thiếu.
 
-Chạy:
+Chạy (GPU lớn, vd A6000 48GB):
   cd backend
-  uv run python finetune_vixtts.py --epochs 12 --batch-size 2
+  uv run python finetune_vixtts.py --epochs 30 --batch-size 4
+  # sau khi train xong -> export thành model dùng được:
+  uv run python export_vixtts.py --run runs/vixtts_ft --out models/viXTTS-ft
 
-⚠️ VRAM: XTTS GPT train khá nặng. 8GB dễ OOM. Nếu OOM:
-   - giảm --batch-size 1, --max-wav 200000
-   - hoặc train trên GPU cloud ≥16GB rồi tải checkpoint về (inference vẫn chạy 8GB).
+VRAM tham khảo (batch 4, fp32): ~18–22GB. A6000/48GB dư sức, có thể tăng --batch-size.
+Mốc VRAM theo GPU:
+  - ≥24GB : --batch-size 4..8 thoải mái
+  - 12–16GB: --batch-size 2..3, cân nhắc --max-wav 220000
+  - 8GB    : full fine-tune KHÔNG ổn (OOM ở optimizer state) — dùng GPU lớn hơn.
+Lưu ý: giữ --workers 0 (worker con của DataLoader không có bản vá tokenizer 'vi').
 """
 from __future__ import annotations
 
@@ -21,6 +26,39 @@ import sys
 
 MODEL_DIR = "models/viXTTS"
 BASE_REPO = "coqui/XTTS-v2"  # nguồn dvae.pth + mel_stats.pth
+
+
+def patch_vietnamese_tokenizer() -> None:
+    """coqui-tts gốc không hỗ trợ 'vi' → thêm nhánh vi (bắt buộc cho cả TRAIN)."""
+    import re
+
+    from TTS.tts.layers.xtts import tokenizer as xtok
+
+    if getattr(xtok.VoiceBpeTokenizer, "_vi_patched", False):
+        return
+    try:
+        from num2words import num2words
+
+        def _vi_num(m):
+            try:
+                return " " + num2words(int(m.group(0)), lang="vi") + " "
+            except Exception:
+                return m.group(0)
+    except Exception:
+        _vi_num = None
+
+    _orig = xtok.VoiceBpeTokenizer.preprocess_text
+
+    def preprocess_text(self, txt, lang):
+        if lang == "vi":
+            txt = txt.replace('"', "").lower()
+            if _vi_num is not None:
+                txt = re.sub(r"\d+", _vi_num, txt)
+            return re.sub(r"\s+", " ", txt).strip()
+        return _orig(self, txt, lang)
+
+    xtok.VoiceBpeTokenizer.preprocess_text = preprocess_text
+    xtok.VoiceBpeTokenizer._vi_patched = True
 
 
 def ensure_base_files() -> tuple[str, str, str, str]:
@@ -50,12 +88,14 @@ def main() -> None:
     ap.add_argument("--dataset", default="dataset")
     ap.add_argument("--out", default="runs/vixtts_ft")
     ap.add_argument("--language", default="vi")
-    ap.add_argument("--epochs", type=int, default=12)
-    ap.add_argument("--batch-size", type=int, default=2)
-    ap.add_argument("--grad-accum", type=int, default=8)
+    ap.add_argument("--epochs", type=int, default=30)
+    ap.add_argument("--batch-size", type=int, default=4)
+    ap.add_argument("--grad-accum", type=int, default=1)
     ap.add_argument("--lr", type=float, default=5e-6)
     ap.add_argument("--max-wav", type=int, default=255995, help="Độ dài wav tối đa (mẫu); giảm nếu OOM")
     ap.add_argument("--max-text", type=int, default=200)
+    ap.add_argument("--workers", type=int, default=0,
+                    help="Số DataLoader worker. GIỮ 0: worker con không có bản vá tokenizer 'vi' → lỗi.")
     args = ap.parse_args()
 
     if not os.path.isfile(os.path.join(args.dataset, "metadata_train.csv")):
@@ -65,12 +105,10 @@ def main() -> None:
 
     from TTS.config.shared_configs import BaseDatasetConfig
     from TTS.tts.datasets import load_tts_samples
-    from TTS.tts.layers.xtts.trainer.gpt_trainer import (
-        GPTArgs,
-        GPTTrainer,
-        GPTTrainerConfig,
-        XttsAudioConfig,
-    )
+    from TTS.tts.layers.xtts.trainer.gpt_trainer import GPTArgs, GPTTrainer, GPTTrainerConfig
+    from TTS.tts.models.xtts import XttsAudioConfig
+
+    patch_vietnamese_tokenizer()  # BẮT BUỘC: cho phép tokenize tiếng Việt khi train
 
     xtts_ckpt, vocab, dvae, mel = ensure_base_files()
     os.makedirs(args.out, exist_ok=True)
@@ -87,7 +125,7 @@ def main() -> None:
     model_args = GPTArgs(
         max_conditioning_length=132300,  # 6s
         min_conditioning_length=66150,   # 3s
-        debug_loading_failures=False,
+        debug_loading_failures=True,
         max_wav_length=args.max_wav,
         max_text_length=args.max_text,
         mel_norm_file=mel,
@@ -111,7 +149,8 @@ def main() -> None:
         batch_size=args.batch_size,
         batch_group_size=48,
         eval_batch_size=args.batch_size,
-        num_loader_workers=4,
+        num_loader_workers=args.workers,
+        num_eval_loader_workers=args.workers,
         eval_split_max_size=256,
         print_step=25,
         plot_step=100,

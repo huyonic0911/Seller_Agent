@@ -13,9 +13,10 @@ from typing import Any
 
 from fastapi import WebSocket
 
-from .comment_source import Comment, CommentSource
-from .llm import SellerBrain
-from .tts import TTSEngine
+from core.comment_source import Comment, CommentSource
+from modules.llm.brain import SellerBrain
+from modules.vision.lipsync import audio_to_visemes
+from modules.voice.tts import TTSEngine
 
 logger = logging.getLogger("seller_agent.pipeline")
 
@@ -106,16 +107,18 @@ class AnswerPipeline:
         if not reply:
             reply = "Dạ cả nhà chờ shop chút xíu nha!"
 
-        # 3. TTS → audio base64
+        # 3. Voice (module voice) → audio; Vision (module vision) → viseme nhép miệng
         audio_b64 = ""
+        visemes: list[dict] = []
         try:
             audio = await self.tts.synthesize(reply)
             if audio:
                 audio_b64 = base64.b64encode(audio).decode("ascii")
+                visemes = audio_to_visemes(audio)  # khung độ-mở-miệng (WAV); mp3 -> []
         except Exception:
             logger.exception("Lỗi TTS")
 
-        # 4. Đẩy câu trả lời + audio về màn live để đọc & nhép miệng
+        # 4. Đẩy câu trả lời + audio + viseme về màn live để đọc & nhép miệng
         await self.hub.broadcast(
             {
                 "type": "reply",
@@ -124,5 +127,6 @@ class AnswerPipeline:
                 "text": reply,
                 "audio": audio_b64,
                 "audio_format": self.tts.audio_format,
+                "visemes": visemes,
             }
         )

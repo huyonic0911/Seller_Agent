@@ -16,7 +16,7 @@ import logging
 import os
 import tempfile
 
-from .config import settings
+from core.config import settings
 
 logger = logging.getLogger("seller_agent.tts")
 

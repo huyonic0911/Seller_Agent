@@ -1,0 +1,173 @@
+{
+  "shop": {
+    "name": "Samsung Store VN",
+    "policies": {
+      "ship": "Freeship toàn quốc đơn từ 5 triệu. Nội thành giao nhanh 2h.",
+      "bao_hanh": "Bảo hành chính hãng Samsung 12 tháng, 1 đổi 1 trong 30 ngày nếu lỗi NSX.",
+      "tra_gop": "Trả góp 0% qua thẻ tín dụng hoặc công ty tài chính.",
+      "thanh_toan": "COD, chuyển khoản, thẻ, hoặc trả góp."
+    }
+  },
+  "products": [
+    {
+      "id": "SS-S24U", "ten": "Samsung Galaxy S24 Ultra", "gia": 33990000, "gia_km": 27990000,
+      "mau": ["Titan Đen", "Titan Xám", "Titan Tím", "Titan Vàng"], "ton_kho": 25,
+      "thong_so": {"man_hinh": "6.8\" QHD+ Dynamic AMOLED 2X 120Hz", "chip": "Snapdragon 8 Gen 3 for Galaxy", "ram": "12GB", "rom": "256GB", "camera": "200MP + 50MP + 12MP + 10MP", "pin": "5000mAh sạc 45W", "dac_biet": "Bút S-Pen tích hợp, khung Titan"},
+      "khuyen_mai": "Trả góp 0%, thu cũ đổi mới trợ giá đến 3 triệu",
+      "mo_ta": "Flagship cao cấp nhất, khung Titan bền bỉ, camera 200MP zoom 100x, bút S-Pen, Galaxy AI.",
+      "faq": ["Hỗ trợ 5G và eSIM.", "Kháng nước bụi IP68."]
+    },
+    {
+      "id": "SS-S24P", "ten": "Samsung Galaxy S24+", "gia": 26990000, "gia_km": 22990000,
+      "mau": ["Đen", "Xám", "Tím", "Vàng"], "ton_kho": 18,
+      "thong_so": {"man_hinh": "6.7\" QHD+ Dynamic AMOLED 2X 120Hz", "chip": "Exynos 2400", "ram": "12GB", "rom": "256GB", "camera": "50MP + 12MP + 10MP", "pin": "4900mAh sạc 45W"},
+      "khuyen_mai": "Tặng tai nghe Galaxy Buds FE",
+      "mo_ta": "Bản Plus màn hình lớn QHD+, hiệu năng mạnh, Galaxy AI đầy đủ.",
+      "faq": ["Hỗ trợ 5G.", "Sạc nhanh 45W."]
+    },
+    {
+      "id": "SS-S24", "ten": "Samsung Galaxy S24", "gia": 22990000, "gia_km": 18490000,
+      "mau": ["Đen", "Xám", "Tím", "Vàng", "Xanh"], "ton_kho": 40,
+      "thong_so": {"man_hinh": "6.2\" FHD+ Dynamic AMOLED 2X 120Hz", "chip": "Exynos 2400", "ram": "8GB", "rom": "256GB", "camera": "50MP + 12MP + 10MP", "pin": "4000mAh sạc 25W"},
+      "khuyen_mai": "Giảm thêm 500k khi thanh toán qua VNPay",
+      "mo_ta": "Flagship nhỏ gọn, dễ cầm, đầy đủ Galaxy AI, giá tốt.",
+      "faq": ["Kích thước nhỏ gọn dễ cầm một tay.", "Hỗ trợ 5G."]
+    },
+    {
+      "id": "SS-S24FE", "ten": "Samsung Galaxy S24 FE", "gia": 16490000, "gia_km": 13990000,
+      "mau": ["Xám", "Xanh Mint", "Xanh Dương", "Vàng", "Đen"], "ton_kho": 35,
+      "thong_so": {"man_hinh": "6.7\" FHD+ Dynamic AMOLED 2X 120Hz", "chip": "Exynos 2400e", "ram": "8GB", "rom": "128GB", "camera": "50MP + 8MP + 12MP", "pin": "4700mAh sạc 25W"},
+      "khuyen_mai": "Trả góp 0% 6 tháng",
+      "mo_ta": "Fan Edition giá mềm, có Galaxy AI, pin lớn, phù hợp đa số người dùng.",
+      "faq": ["Có Galaxy AI như dòng S24.", "Hỗ trợ 5G."]
+    },
+    {
+      "id": "SS-S23U", "ten": "Samsung Galaxy S23 Ultra", "gia": 26990000, "gia_km": 21990000,
+      "mau": ["Đen", "Kem", "Xanh Lá", "Tím"], "ton_kho": 12,
+      "thong_so": {"man_hinh": "6.8\" QHD+ Dynamic AMOLED 2X 120Hz", "chip": "Snapdragon 8 Gen 2 for Galaxy", "ram": "12GB", "rom": "256GB", "camera": "200MP + 10MP + 10MP + 12MP", "pin": "5000mAh sạc 45W", "dac_biet": "Bút S-Pen"},
+      "khuyen_mai": "Giá sốc xả hàng, số lượng có hạn",
+      "mo_ta": "Flagship đời trước còn rất mạnh, camera 200MP, bút S-Pen, pin 5000mAh.",
+      "faq": ["Còn hàng số lượng ít.", "Hỗ trợ 5G."]
+    },
+    {
+      "id": "SS-S23FE", "ten": "Samsung Galaxy S23 FE", "gia": 13990000, "gia_km": 10990000,
+      "mau": ["Tím", "Kem", "Xanh Mint", "Than Chì"], "ton_kho": 22,
+      "thong_so": {"man_hinh": "6.4\" FHD+ Dynamic AMOLED 2X 120Hz", "chip": "Exynos 2200", "ram": "8GB", "rom": "128GB", "camera": "50MP + 8MP + 12MP", "pin": "4500mAh sạc 25W"},
+      "khuyen_mai": "Tặng ốp lưng + dán màn hình",
+      "mo_ta": "Fan Edition tầm trung cận cao cấp, màn AMOLED đẹp, camera 50MP.",
+      "faq": ["Hỗ trợ 5G.", "Pin dùng cả ngày."]
+    },
+    {
+      "id": "SS-ZFOLD6", "ten": "Samsung Galaxy Z Fold6", "gia": 43990000, "gia_km": 38990000,
+      "mau": ["Xám", "Xanh Navy", "Hồng"], "ton_kho": 8,
+      "thong_so": {"man_hinh": "Chính 7.6\" QXGA+ AMOLED 120Hz, phụ 6.3\"", "chip": "Snapdragon 8 Gen 3 for Galaxy", "ram": "12GB", "rom": "256GB", "camera": "50MP + 12MP + 10MP", "pin": "4400mAh sạc 25W", "dac_biet": "Màn hình gập, hỗ trợ S-Pen (mua rời)"},
+      "khuyen_mai": "Thu cũ đổi mới trợ giá đến 5 triệu",
+      "mo_ta": "Điện thoại gập cao cấp, màn lớn 7.6 inch cho đa nhiệm, mỏng nhẹ hơn đời trước.",
+      "faq": ["S-Pen bán rời.", "Kháng nước IP48."]
+    },
+    {
+      "id": "SS-ZFLIP6", "ten": "Samsung Galaxy Z Flip6", "gia": 26990000, "gia_km": 23490000,
+      "mau": ["Xanh Mint", "Vàng", "Xanh Navy", "Bạc"], "ton_kho": 15,
+      "thong_so": {"man_hinh": "Chính 6.7\" FHD+ AMOLED 120Hz, phụ 3.4\"", "chip": "Snapdragon 8 Gen 3 for Galaxy", "ram": "12GB", "rom": "256GB", "camera": "50MP + 12MP", "pin": "4000mAh sạc 25W", "dac_biet": "Gập vỏ sò nhỏ gọn"},
+      "khuyen_mai": "Trả góp 0%, tặng ốp trong suốt",
+      "mo_ta": "Điện thoại gập vỏ sò thời trang, gọn túi, màn phụ tiện lợi, camera 50MP.",
+      "faq": ["Gập lại rất nhỏ gọn.", "Hỗ trợ 5G."]
+    },
+    {
+      "id": "SS-ZFOLD5", "ten": "Samsung Galaxy Z Fold5", "gia": 33990000, "gia_km": 25990000,
+      "mau": ["Đen", "Kem", "Xanh"], "ton_kho": 6,
+      "thong_so": {"man_hinh": "Chính 7.6\" QXGA+ AMOLED 120Hz", "chip": "Snapdragon 8 Gen 2 for Galaxy", "ram": "12GB", "rom": "256GB", "camera": "50MP + 12MP + 10MP", "pin": "4400mAh sạc 25W"},
+      "khuyen_mai": "Xả hàng đời cũ giá tốt",
+      "mo_ta": "Máy gập đời trước, hiệu năng mạnh, phù hợp người muốn màn lớn giá mềm hơn.",
+      "faq": ["Còn ít hàng.", "Hỗ trợ S-Pen mua rời."]
+    },
+    {
+      "id": "SS-ZFLIP5", "ten": "Samsung Galaxy Z Flip5", "gia": 22990000, "gia_km": 16990000,
+      "mau": ["Kem", "Xanh Mint", "Tím", "Đen"], "ton_kho": 10,
+      "thong_so": {"man_hinh": "Chính 6.7\" FHD+ AMOLED 120Hz, phụ 3.4\"", "chip": "Snapdragon 8 Gen 2 for Galaxy", "ram": "8GB", "rom": "256GB", "camera": "12MP + 12MP", "pin": "3700mAh sạc 25W"},
+      "khuyen_mai": "Giá tốt đón đời mới",
+      "mo_ta": "Gập vỏ sò đời trước, nhỏ gọn thời trang, giá hấp dẫn.",
+      "faq": ["Hỗ trợ 5G.", "Màn phụ xem thông báo tiện lợi."]
+    },
+    {
+      "id": "SS-A55", "ten": "Samsung Galaxy A55 5G", "gia": 10490000, "gia_km": 8990000,
+      "mau": ["Xanh Navy", "Xanh Nhạt", "Tím", "Đen"], "ton_kho": 50,
+      "thong_so": {"man_hinh": "6.6\" FHD+ Super AMOLED 120Hz", "chip": "Exynos 1480", "ram": "8GB", "rom": "128GB", "camera": "50MP + 12MP + 5MP", "pin": "5000mAh sạc 25W", "dac_biet": "Khung kim loại"},
+      "khuyen_mai": "Trả góp 0% 6 tháng, tặng sạc nhanh 25W",
+      "mo_ta": "Tầm trung cao cấp, khung kim loại, màn AMOLED 120Hz, pin 5000mAh, chống nước IP67.",
+      "faq": ["Chống nước bụi IP67.", "Hỗ trợ 5G."]
+    },
+    {
+      "id": "SS-A35", "ten": "Samsung Galaxy A35 5G", "gia": 8490000, "gia_km": 6990000,
+      "mau": ["Xanh Navy", "Xanh Nhạt", "Vàng", "Tím"], "ton_kho": 45,
+      "thong_so": {"man_hinh": "6.6\" FHD+ Super AMOLED 120Hz", "chip": "Exynos 1380", "ram": "8GB", "rom": "128GB", "camera": "50MP + 8MP + 5MP", "pin": "5000mAh sạc 25W"},
+      "khuyen_mai": "Giảm 500k qua ví điện tử",
+      "mo_ta": "Tầm trung phổ biến, màn AMOLED 120Hz, camera 50MP, pin trâu, chống nước IP67.",
+      "faq": ["Chống nước IP67.", "Hỗ trợ 5G."]
+    },
+    {
+      "id": "SS-A25", "ten": "Samsung Galaxy A25 5G", "gia": 6490000, "gia_km": 5490000,
+      "mau": ["Xanh", "Vàng", "Xanh Đậm", "Đen"], "ton_kho": 38,
+      "thong_so": {"man_hinh": "6.5\" FHD+ Super AMOLED 120Hz", "chip": "Exynos 1280", "ram": "8GB", "rom": "128GB", "camera": "50MP + 8MP + 2MP", "pin": "5000mAh sạc 25W"},
+      "khuyen_mai": "Trả góp 0%",
+      "mo_ta": "Tầm trung giá tốt, màn AMOLED 120Hz hiếm có trong phân khúc, pin 5000mAh.",
+      "faq": ["Hỗ trợ 5G.", "Màn AMOLED sắc nét."]
+    },
+    {
+      "id": "SS-A15", "ten": "Samsung Galaxy A15", "gia": 4490000, "gia_km": 3690000,
+      "mau": ["Xanh", "Vàng", "Đen", "Xanh Đậm"], "ton_kho": 60,
+      "thong_so": {"man_hinh": "6.5\" FHD+ Super AMOLED 90Hz", "chip": "Helio G99", "ram": "8GB", "rom": "128GB", "camera": "50MP + 5MP + 2MP", "pin": "5000mAh sạc 25W"},
+      "khuyen_mai": "Tặng bao da + dán màn",
+      "mo_ta": "Giá rẻ nhưng có màn AMOLED, pin lớn, phù hợp học sinh sinh viên.",
+      "faq": ["Bản 4G.", "Pin 5000mAh dùng lâu."]
+    },
+    {
+      "id": "SS-A05S", "ten": "Samsung Galaxy A05s", "gia": 3290000, "gia_km": 2790000,
+      "mau": ["Đen", "Bạc", "Xanh"], "ton_kho": 70,
+      "thong_so": {"man_hinh": "6.7\" FHD+ PLS LCD 90Hz", "chip": "Snapdragon 680", "ram": "6GB", "rom": "128GB", "camera": "50MP + 2MP + 2MP", "pin": "5000mAh sạc 25W"},
+      "khuyen_mai": "Giá sốc cho học sinh",
+      "mo_ta": "Điện thoại giá rẻ, màn lớn, pin trâu, hợp nhu cầu cơ bản.",
+      "faq": ["Bản 4G.", "Màn hình lớn 6.7 inch."]
+    },
+    {
+      "id": "SS-A06", "ten": "Samsung Galaxy A06", "gia": 2790000, "gia_km": 2390000,
+      "mau": ["Đen", "Xanh Nhạt", "Vàng"], "ton_kho": 80,
+      "thong_so": {"man_hinh": "6.7\" HD+ PLS LCD", "chip": "Helio G85", "ram": "4GB", "rom": "64GB", "camera": "50MP + 2MP", "pin": "5000mAh sạc 25W"},
+      "khuyen_mai": "Rẻ nhất phân khúc",
+      "mo_ta": "Điện thoại phổ thông giá rẻ nhất, pin lớn, dùng cho người lớn tuổi hoặc máy phụ.",
+      "faq": ["Bản 4G.", "Giá rẻ nhất cửa hàng."]
+    },
+    {
+      "id": "SS-A16", "ten": "Samsung Galaxy A16 5G", "gia": 5490000, "gia_km": 4690000,
+      "mau": ["Xanh Đậm", "Xám", "Vàng Kem"], "ton_kho": 42,
+      "thong_so": {"man_hinh": "6.7\" FHD+ Super AMOLED 90Hz", "chip": "Exynos 1330", "ram": "8GB", "rom": "128GB", "camera": "50MP + 5MP + 2MP", "pin": "5000mAh sạc 25W"},
+      "khuyen_mai": "Cam kết cập nhật 6 năm phần mềm",
+      "mo_ta": "Tầm trung giá tốt có 5G, màn AMOLED, cam kết update lâu dài 6 năm.",
+      "faq": ["Hỗ trợ 5G.", "Cập nhật phần mềm 6 năm."]
+    },
+    {
+      "id": "SS-M55", "ten": "Samsung Galaxy M55 5G", "gia": 9990000, "gia_km": 7990000,
+      "mau": ["Đen", "Xanh"], "ton_kho": 20,
+      "thong_so": {"man_hinh": "6.7\" FHD+ Super AMOLED Plus 120Hz", "chip": "Snapdragon 7 Gen 1", "ram": "8GB", "rom": "128GB", "camera": "50MP + 8MP + 2MP", "pin": "5000mAh sạc nhanh 45W"},
+      "khuyen_mai": "Sạc nhanh 45W tặng kèm",
+      "mo_ta": "Dòng M hiệu năng/pin, sạc nhanh 45W, màn AMOLED Plus, camera selfie 50MP.",
+      "faq": ["Sạc nhanh 45W.", "Hỗ trợ 5G."]
+    },
+    {
+      "id": "SS-M15", "ten": "Samsung Galaxy M15 5G", "gia": 4990000, "gia_km": 3990000,
+      "mau": ["Xanh", "Xám Titan", "Xanh Ngọc"], "ton_kho": 33,
+      "thong_so": {"man_hinh": "6.5\" FHD+ Super AMOLED 90Hz", "chip": "Dimensity 6100+", "ram": "6GB", "rom": "128GB", "camera": "50MP + 5MP + 2MP", "pin": "6000mAh sạc 25W"},
+      "khuyen_mai": "Pin 6000mAh cực trâu",
+      "mo_ta": "Pin khủng 6000mAh, có 5G, màn AMOLED, giá rẻ, phù hợp người cần pin lâu.",
+      "faq": ["Pin 6000mAh dùng 2 ngày.", "Hỗ trợ 5G."]
+    },
+    {
+      "id": "SS-S23", "ten": "Samsung Galaxy S23", "gia": 18990000, "gia_km": 14490000,
+      "mau": ["Kem", "Đen", "Xanh Lá", "Tím"], "ton_kho": 14,
+      "thong_so": {"man_hinh": "6.1\" FHD+ Dynamic AMOLED 2X 120Hz", "chip": "Snapdragon 8 Gen 2 for Galaxy", "ram": "8GB", "rom": "256GB", "camera": "50MP + 12MP + 10MP", "pin": "3900mAh sạc 25W"},
+      "khuyen_mai": "Flagship nhỏ gọn giá tốt",
+      "mo_ta": "Flagship đời trước nhỏ gọn, chip Snapdragon mạnh, camera tốt, dễ cầm.",
+      "faq": ["Nhỏ gọn một tay.", "Hỗ trợ 5G."]
+    }
+  ]
+}

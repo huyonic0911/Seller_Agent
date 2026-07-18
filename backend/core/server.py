@@ -7,12 +7,13 @@ import logging
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
-from .comment_source import Comment, SimulatedCommentSource
-from .config import settings
-from .llm import SellerBrain
-from .pipeline import AnswerPipeline, StreamHub
-from .products import ProductStore
-from .tts import TTSEngine
+from core.comment_source import Comment, SimulatedCommentSource
+from core.config import settings
+from core.pipeline import AnswerPipeline, StreamHub
+from modules.llm.brain import SellerBrain
+from modules.llm.rag import ProductStore
+from modules.vision.avatar import get_avatar_config
+from modules.voice.tts import TTSEngine
 
 logging.basicConfig(level=logging.INFO)
 
@@ -70,6 +71,12 @@ async def products():
 @app.get("/samples")
 async def samples():
     return {"samples": SimulatedCommentSource.SAMPLES}
+
+
+@app.get("/avatar")
+async def avatar():
+    """Cấu hình avatar cho frontend (module vision): kiểu, model, tham số miệng."""
+    return get_avatar_config().to_dict()
 
 
 @app.websocket("/ws/comments")

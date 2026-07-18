@@ -114,11 +114,35 @@ class ProductStore:
             parts.append("màu: " + ", ".join(p["mau"]))
         if p.get("size"):
             parts.append("size: " + ", ".join(str(s) for s in p["size"]))
+        if isinstance(p.get("thong_so"), dict):
+            specs = ", ".join(f"{k}: {v}" for k, v in p["thong_so"].items())
+            parts.append("thông số: " + specs)
+        if p.get("khuyen_mai"):
+            parts.append("ưu đãi: " + str(p["khuyen_mai"]))
         if p.get("mo_ta"):
             parts.append("mô tả: " + str(p["mo_ta"]))
         if p.get("faq"):
             parts.append("FAQ: " + " | ".join(p["faq"]))
         return " — ".join(parts)
+
+    def product_line(self, p: dict[str, Any]) -> str:
+        """Dòng mô tả 1 sản phẩm (public, dùng để dựng context RAG)."""
+        return self._product_line(p)
+
+    def product_text(self, p: dict[str, Any]) -> str:
+        """Văn bản giàu ngữ nghĩa để embedding (bge-m3): tên + màu + thông số + mô tả + FAQ."""
+        bits = [str(p.get("ten", ""))]
+        if p.get("mau"):
+            bits.append("Màu: " + ", ".join(p["mau"]))
+        if isinstance(p.get("thong_so"), dict):
+            bits.append(". ".join(f"{k} {v}" for k, v in p["thong_so"].items()))
+        if p.get("khuyen_mai"):
+            bits.append(str(p["khuyen_mai"]))
+        if p.get("mo_ta"):
+            bits.append(str(p["mo_ta"]))
+        if p.get("faq"):
+            bits.append(" ".join(p["faq"]))
+        return ". ".join(b for b in bits if b)
 
     def catalog_text(self) -> str:
         """Chuỗi mô tả toàn bộ danh mục + chính sách shop, đưa vào system prompt."""
@@ -135,6 +159,18 @@ class ProductStore:
         lines.append("DANH MỤC SẢN PHẨM:")
         for p in self.products:
             lines.append("- " + self._product_line(p))
+        return "\n".join(lines)
+
+    def shop_text(self) -> str:
+        """Tên shop + chính sách (không kèm danh mục) — dùng cho context RAG."""
+        lines: list[str] = []
+        if self.shop.get("name"):
+            lines.append(f"TÊN SHOP: {self.shop['name']}")
+        policies = self.shop.get("policies") or {}
+        if policies:
+            lines.append("CHÍNH SÁCH SHOP:")
+            for k, v in policies.items():
+                lines.append(f"- {k}: {v}")
         return "\n".join(lines)
 
     def shop_name(self) -> str:

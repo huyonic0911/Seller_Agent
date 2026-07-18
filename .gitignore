@@ -52,3 +52,7 @@ Thumbs.db
 !.vscode/settings.json
 !.vscode/extensions.json
 *.swp
+
+# RAG (Qdrant) — dữ liệu vector DB (Docker volume + chế độ nhúng), không commit
+backend/qdrant_storage/
+backend/qdrant_data/

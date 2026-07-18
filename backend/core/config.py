@@ -96,10 +96,29 @@ class Settings:
         default_factory=lambda: float(os.getenv("VIXTTS_TEMPERATURE", "0.7"))
     )
 
+    # --- Vision (avatar) ---
+    # Kiểu avatar: "svg" (mặc định frontend) | "live2d" (2D) | "3d" (chuẩn bị)
+    avatar_type: str = field(default_factory=lambda: os.getenv("AVATAR_TYPE", "live2d").lower())
+    # Định danh/đường dẫn model cho frontend nạp (Live2D .model3.json hoặc model 3D)
+    avatar_model: str = field(default_factory=lambda: os.getenv("AVATAR_MODEL", ""))
+    # Backend có sinh sẵn khung nhép miệng (viseme) từ audio để gửi kèm không
+    viseme_enabled: bool = field(default_factory=lambda: _get_bool("VISEME_ENABLED", True))
+    viseme_fps: int = field(default_factory=lambda: int(os.getenv("VISEME_FPS", "30")))
+
     # Dữ liệu
     products_path: Path = field(
-        default_factory=lambda: Path(os.getenv("PRODUCTS_PATH", str(BASE_DIR / "data" / "products.json")))
+        default_factory=lambda: Path(os.getenv("PRODUCTS_PATH", str(BASE_DIR / "data" / "samsung_phones.json")))
     )
+
+    # --- RAG (module llm): bge-m3 embedding + Qdrant vector DB ---
+    rag_enabled: bool = field(default_factory=lambda: _get_bool("RAG_ENABLED", True))
+    embed_model: str = field(default_factory=lambda: os.getenv("EMBED_MODEL", "BAAI/bge-m3"))
+    embed_device: str = field(default_factory=lambda: os.getenv("EMBED_DEVICE", "cpu"))  # cpu|cuda
+    rag_top_k: int = field(default_factory=lambda: int(os.getenv("RAG_TOP_K", "4")))
+    # Qdrant: có QDRANT_URL -> nối server; rỗng -> chế độ nhúng local theo QDRANT_PATH
+    qdrant_url: str = field(default_factory=lambda: os.getenv("QDRANT_URL", "http://localhost:6333"))
+    qdrant_path: str = field(default_factory=lambda: os.getenv("QDRANT_PATH", "qdrant_data"))
+    qdrant_collection: str = field(default_factory=lambda: os.getenv("QDRANT_COLLECTION", "products"))
 
     # Persona
     persona: str = field(default_factory=lambda: os.getenv("PERSONA", DEFAULT_PERSONA))

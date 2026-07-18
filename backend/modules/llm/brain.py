@@ -11,10 +11,11 @@ Nếu backend được chọn lỗi (vd chưa bật Ollama), tự động fallba
 """
 from __future__ import annotations
 
+import asyncio
 import logging
 
-from .config import settings
-from .products import ProductStore
+from core.config import settings
+from modules.llm.rag import ProductStore
 
 logger = logging.getLogger("seller_agent.llm")
 
@@ -25,6 +26,17 @@ class SellerBrain:
         self.provider = settings.llm_provider
         self._client = None  # lazy
         self._warned_fallback = False
+        self._warned_rag = False
+
+        # RAG: retriever bge-m3 + Qdrant (nạp lười ở lần dùng đầu)
+        self._retriever = None
+        if settings.rag_enabled:
+            try:
+                from modules.llm.retriever import Retriever
+
+                self._retriever = Retriever(store)
+            except Exception as exc:  # thiếu thư viện RAG -> bỏ, dùng full catalog
+                logger.warning("Không khởi tạo được RAG (%s) → dùng full catalog.", exc)
 
         if self.provider == "anthropic" and not settings.anthropic_api_key:
             logger.warning("provider=anthropic nhưng thiếu ANTHROPIC_API_KEY → dùng offline.")
@@ -33,16 +45,30 @@ class SellerBrain:
             logger.warning("LLM_PROVIDER không hợp lệ: %s → dùng qwen.", self.provider)
             self.provider = "qwen"
 
-        logger.info("LLM provider=%s model=%s", self.provider, settings.model)
+        logger.info(
+            "LLM provider=%s model=%s rag=%s",
+            self.provider, settings.model, "on" if self._retriever else "off",
+        )
 
-    # ---- Dựng prompt (dùng chung mọi provider) ---------------------------
-    def _system_text(self) -> str:
+    # ---- Dựng phần tham chiếu (RAG top-k hoặc full catalog) --------------
+    def _build_reference(self, query: str) -> str:
+        if self._retriever is not None:
+            try:
+                ctx, prods = self._retriever.context(query)
+                if ctx:
+                    return self.store.shop_text() + "\n\nSẢN PHẨM LIÊN QUAN:\n" + ctx
+            except Exception as exc:
+                if not self._warned_rag:
+                    logger.warning("RAG lỗi (%s) → dùng full catalog.", exc)
+                    self._warned_rag = True
+        return self.store.catalog_text()
+
+    def _system_text(self, reference: str) -> str:
         persona = settings.persona.format(shop_name=self.store.shop_name())
-        catalog = self.store.catalog_text()
         return (
             persona
             + "\n\nDỮ LIỆU THAM CHIẾU (chỉ dùng đúng những gì có ở đây):\n"
-            + catalog
+            + reference
             + "\n\nChỉ trả về câu trả lời cuối cùng để đọc trên live, không kèm giải thích."
         )
 
@@ -54,7 +80,9 @@ class SellerBrain:
         if self.provider == "offline":
             return self._offline_answer(comment)
 
-        system = self._system_text()
+        # Truy hồi (embedding) nặng CPU → chạy trong thread để không chặn event loop
+        reference = await asyncio.to_thread(self._build_reference, comment)
+        system = self._system_text(reference)
         user = self._user_text(comment, author)
         try:
             if self.provider == "anthropic":

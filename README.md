@@ -25,7 +25,7 @@ mục sản phẩm. Avatar hiển thị dạng nhân vật (SVG mặc định ho
 tương thích OpenAI nên cắm được mọi endpoint kiểu OpenAI (Ollama, vLLM, LM Studio,
 llama.cpp server...).
 
-Chi tiết quyết định kỹ thuật: `backend/app/*` có chú thích, và file kế hoạch trong
+Chi tiết quyết định kỹ thuật: `backend/core/*` và `backend/modules/*` có chú thích, và file kế hoạch trong
 `~/.claude/plans/`.
 
 ## Yêu cầu
@@ -64,6 +64,42 @@ Gợi ý model theo VRAM:
 > và `LLM_MODEL` (mặc định `qwen2.5:7b`) trong `.env`. Có thể thay bằng vLLM / LM Studio
 > / llama.cpp server — chỉ cần endpoint kiểu OpenAI.
 
+## 0b. RAG: bge-m3 (self-host) + Qdrant (module llm)
+
+Agent trả lời dựa trên **tìm kiếm ngữ nghĩa** danh mục (embedding `BAAI/bge-m3` +
+vector DB Qdrant) — chỉ nhét sản phẩm LIÊN QUAN vào prompt thay vì cả danh mục.
+Data mẫu: `data/samsung_phones.json` (20 điện thoại Samsung).
+
+```bash
+cd backend
+
+# 1) Cài deps RAG (sentence-transformers + qdrant-client)
+uv pip install --python .venv -r requirements-rag.txt
+
+# 2) Dựng Qdrant server bằng Docker (cổng 6333)
+docker run -d --name qdrant -p 6333:6333 -p 6334:6334 \
+  -v "$(pwd)/qdrant_storage:/qdrant/storage" qdrant/qdrant
+
+# 3) Index danh mục: embed bge-m3 (tải ~2.2GB lần đầu) -> upsert Qdrant
+uv run python -m modules.llm.ingest
+#   -> "✅ đã index 20 điểm" + vài truy vấn thử
+```
+
+Cấu hình `.env` (đã có mặc định hợp lý):
+```
+RAG_ENABLED=true
+EMBED_MODEL=BAAI/bge-m3
+EMBED_DEVICE=cpu               # cpu (an toàn VRAM) | cuda (nhanh hơn)
+QDRANT_URL=http://localhost:6333   # rỗng -> chế độ nhúng local (không cần Docker)
+RAG_TOP_K=4
+```
+
+> - Không có Docker? Bỏ trống `QDRANT_URL` → qdrant-client chạy **chế độ nhúng local**
+>   (lưu ở `QDRANT_PATH=qdrant_data`), vẫn ingest/truy vấn được, không cần server.
+> - Đổi danh mục: sửa `data/samsung_phones.json` (hoặc trỏ `PRODUCTS_PATH`) rồi **chạy lại ingest**.
+> - RAG lỗi/ chưa ingest → SellerBrain tự lùi về nhét full catalog vào prompt (không chết).
+> - `bge-m3` chạy self-host trong tiến trình; đổi `EMBED_DEVICE=cuda` nếu còn VRAM.
+
 ## 1. Chạy Backend
 
 ```bash
@@ -73,12 +109,12 @@ cp .env.example .env          # mặc định LLM_PROVIDER=qwen trỏ tới Olla
 # Dùng uv (khuyến nghị):
 uv venv .venv
 uv pip install --python .venv -r requirements.txt
-.venv/bin/uvicorn app.main:app --reload --port 8000
+.venv/bin/uvicorn core.server:app --reload --port 8000
 
 # hoặc dùng pip thường:
 # python -m venv .venv && source .venv/bin/activate
 # pip install -r requirements.txt
-# uvicorn app.main:app --reload --port 8000
+# uvicorn core.server:app --reload --port 8000
 ```
 
 Kiểm tra: mở http://localhost:8000/health → thấy `provider`, `model`, số sản phẩm, giọng TTS.
@@ -174,8 +210,8 @@ VIXTTS_DEVICE=cuda
 
 **Test nhanh clone giọng** (script debug, tự cắt reference + đọc thử 1 câu → `debug_vixtts_out.wav`):
 ```bash
-uv run python debug_vixtts.py                       # dùng data/female_1.wav mặc định
-uv run python debug_vixtts.py --src /path/giong.wav --ref-start 60 --ref-dur 25
+uv run python modules/voice/training/debug_vixtts.py                       # dùng data/female_1.wav mặc định
+uv run python modules/voice/training/debug_vixtts.py --src /path/giong.wav --ref-start 60 --ref-dur 25
 ```
 
 Khởi động lại backend. Lần đọc **đầu tiên** hơi lâu (nạp model ~10–17s), câu sau ~1s
@@ -191,10 +227,43 @@ Khởi động lại backend. Lần đọc **đầu tiên** hơi lâu (nạp mod
 > "119k" → "một trăm mười chín nghìn". Muốn giống hơn nữa: thu mẫu giọng dài hơn,
 > hoặc fine-tune viXTTS trên dataset của bạn (bước nâng cao).
 
+## 2d. Fine-tune viXTTS giọng riêng (nâng cao — dùng cả file audio dài làm data)
+
+Khi clone zero-shot chưa đủ giống, fine-tune trên toàn bộ audio (đã cắt câu + transcript).
+
+Chạy trên **GPU lớn** (A6000/48GB — full fine-tune cần ~18–22GB ở batch 4). 5060 8GB
+KHÔNG đủ để train (OOM ở optimizer state); train nơi khác rồi tải checkpoint về —
+**inference vẫn chạy tốt trên 5060**.
+
+```bash
+cd backend
+
+# 1) Chuẩn bị dataset: Whisper transcribe + cắt câu 3–11s + mono 22050 + metadata
+uv run python modules/voice/training/prepare_dataset.py --src data/female_1.wav
+#   -> dataset/wavs/*.wav + metadata_train.csv + metadata_eval.csv (142 clip ~15.6 phút)
+
+# 2) Train (tự tải dvae.pth + mel_stats.pth từ coqui/XTTS-v2)
+uv run python modules/voice/training/finetune_vixtts.py --epochs 30 --batch-size 4
+#   -> checkpoint trong runs/vixtts_ft/<run>/  (theo dõi test_sentences + eval loss để tránh overfit)
+
+# 3) Export checkpoint -> model dùng được + tự kiểm chứng 1 câu
+uv run python modules/voice/training/export_vixtts.py --run runs/vixtts_ft --out models/viXTTS-ft
+```
+
+Rồi trong `.env` đổi 1 dòng để agent dùng giọng fine-tune:
+```
+VIXTTS_MODEL_DIR=models/viXTTS-ft
+```
+
+> - `--workers 0` **bắt buộc**: worker con của DataLoader không có bản vá tokenizer `vi` → lỗi (không liên quan VRAM).
+> - Mốc `--batch-size`: ≥24GB → 4..8; 12–16GB → 2..3 (+`--max-wav 220000`); 8GB → không đủ.
+> - Train trên cloud/A6000: upload `dataset/` + `models/viXTTS/`, chạy đúng 3 lệnh trên,
+>   tải `models/viXTTS-ft/` về máy 5060 để chạy.
+
 ## 3. Tùy chỉnh
 
 - **Tính cách agent (persona):** sửa `PERSONA` trong `.env` hoặc `DEFAULT_PERSONA`
-  trong `backend/app/config.py`.
+  trong `backend/core/config.py`.
 - **Danh mục sản phẩm:** sửa `backend/data/products.json` (hoặc trỏ `PRODUCTS_PATH`
   tới file `.xlsx` — cột: `id, ten, gia, gia_km, mau, size, ton_kho, mo_ta, faq`).
 - **Giọng nói:** `TTS_ENGINE` = `vixtts` (clone giọng riêng, GPU — mục 2c) /
@@ -207,24 +276,38 @@ Khởi động lại backend. Lần đọc **đầu tiên** hơi lâu (nạp mod
 
 ## Cấu trúc thư mục
 
+Backend tách theo 3 module chính + lớp `core` điều phối. Chạy từ `backend/`
+(entrypoint `core.server:app`). Asset (data/, models/, voices/, dataset/, runs/)
+để ở `backend/` root, dùng chung.
+
 ```
 backend/
-  app/
-    main.py            # FastAPI + WebSocket /ws/comments, /ws/stream
-    config.py          # cấu hình + persona ("train tính cách")
-    products.py        # ProductStore: load JSON/Excel, catalog_text(), search()
-    llm.py             # SellerBrain: Qwen (OpenAI-compat) / Claude / offline template
-    tts.py             # TTSEngine: edge-tts → MP3 bytes
-    pipeline.py        # worker: queue → llm → tts → broadcast; StreamHub
-    comment_source.py  # CommentSource + SimulatedCommentSource (interface cho TikTok)
-  data/products.json   # danh mục mẫu
-frontend/
+  core/                    # NỀN TẢNG chung (điều phối 3 module)
+    server.py              # FastAPI + WebSocket /ws/comments, /ws/stream, REST /avatar...
+    config.py              # cấu hình + persona ("train tính cách") + avatar/viseme
+    pipeline.py            # worker: comment → LLM → Voice(TTS) → Vision(viseme) → broadcast
+    comment_source.py      # CommentSource + SimulatedCommentSource (interface cho TikTok)
+  modules/
+    llm/                   # ── Module LLM (+ RAG) ──
+      brain.py             # SellerBrain: Qwen / Claude / offline; dùng RAG dựng context
+      rag.py               # ProductStore: load JSON/Excel, product_text(), catalog_text()
+      embedder.py          # bge-m3 self-host (sentence-transformers, 1024d)
+      vectorstore.py       # Qdrant (server url hoặc nhúng local)
+      retriever.py         # câu hỏi -> top-k SP liên quan
+      ingest.py            # `python -m modules.llm.ingest`: embed -> Qdrant
+    voice/                 # ── Module Voice Cloning ──
+      tts.py               # TTSEngine: vixtts / piper / espeak / edge
+      training/            # prepare_dataset · finetune_vixtts · export_vixtts · debug_vixtts
+    vision/                # ── Module Vision (avatar 2D/3D) ──
+      avatar.py            # cấu hình avatar (kiểu, model, tham số miệng) cho frontend
+      lipsync.py           # sinh viseme/độ-mở-miệng từ audio (chuẩn bị cho 3D)
+  data/samsung_phones.json # danh mục RAG (20 SP)  ·  data/female_1.wav (giọng nguồn)
+  models/ voices/ dataset/ runs/ qdrant_storage/   # model, giọng, dataset, vector DB (không commit)
+frontend/                  # CLIENT render vision (Live2D/SVG)
   src/
-    App.tsx
-    components/        # Live2DStage (SVG/Live2D), ChatOverlay, AdminPanel
-    hooks/useWebSocket.ts
-    lib/lipsync.ts     # Web Audio → độ mở miệng 0..1
-    lib/live2d.ts      # nạp model Cubism (tùy chọn)
+    components/Live2DStage.tsx   # render SVG/Live2D + nhép miệng
+    hooks/useWebSocket.ts        # nhận reply + audio + visemes
+    lib/lipsync.ts               # (fallback) Web Audio → độ mở miệng nếu không có visemes
 ```
 
 ## Lộ trình sau MVP

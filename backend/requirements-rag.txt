@@ -1,0 +1,7 @@
+# === Phụ thuộc cho RAG (module llm) ===
+#   uv pip install --python .venv -r requirements-rag.txt
+# bge-m3 (~2.2GB) tự tải từ Hugging Face ở lần embedding đầu.
+# Qdrant server chạy bằng Docker (xem README); qdrant-client cũng hỗ trợ chế độ nhúng local.
+
+sentence-transformers>=3.0     # nạp self-host bge-m3 (dense 1024d)
+qdrant-client>=1.12            # client + chế độ nhúng local

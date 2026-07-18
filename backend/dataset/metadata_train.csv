@@ -1,0 +1,136 @@
+audio_file|text|speaker_name
+wavs/utt_0138.wav|tới đây là mình đã có một design system hoàn chỉnh dành cho GoStack từ một cái app generic,|female_1
+wavs/utt_0124.wav|thêm một chức năng nữa mà các bạn nên thử là feedback ở đây thì nếu component nào mà bạn chưa ưng thì bạn có thể sửa bằng cách miêu tả cái bạn muốn như ở đây mình thấy view timeline màu hơi nhạt với trầm kiểu hơi muted|female_1
+wavs/utt_0127.wav|sau tầm 5 phút thì dark mode đã hoàn thành trước khi mình cho các bạn xem thành phẩm cuối cùng thì mình muốn chia sẻ với các bạn thêm một tip nữa claw design hỗ trợ chức năng edit inline|female_1
+wavs/utt_0134.wav|dashboard và roadmap so với bản cũ thì giao diện này đã bớt hẳn cảm giác AI Slot và có bản sắc riêng hơn nhiều các interaction chính cũng được replicate khá đầy đủ như|female_1
+wavs/utt_0128.wav|ở đây thì bạn nào biết chút về CSS thì sẽ cực hữu dụng các bạn có thể chọn một component bất kỳ và sửa ngay trong canvas như ở đây thì mình chọn phần chữ display|female_1
+wavs/utt_0066.wav|ôn thi hoặc build một sản phẩm riêng Tiếp theo là đối tượng người dùng sau đó là một vài tính năng chính.|female_1
+wavs/utt_0119.wav|rồi cả visualization cho timeline view ở đây claw chọn font chủ đạo là instrument sheriff với hand can grotesque cho body đều là máy font rất là clean gợi cảm giác editorial nhẹ|female_1
+wavs/utt_0118.wav|chi tiết hơn nữa thì có elevation logo trên nền sáng và nền tối accent color|female_1
+wavs/utt_0001.wav|nhìn phát là nhận ra ngay không? Lý do là vì khi làm việc với AI agent,|female_1
+wavs/utt_0061.wav|Rồi, sau khi bấm Create here Claw Design sẽ yêu cầu các bạn miêu tả thương hiệu một cách chi tiết.|female_1
+wavs/utt_0095.wav|wordmark, bảng màu và ý nghĩa. Điểm mình thích ở đây là các direction nhìn có personality|female_1
+wavs/utt_0094.wav|ít lỗi còn chat GPT thì nhanh hơn nhưng mình vẫn gặp vài lỗi lặt vặt phải sửa sau đó thì đây là 3 logo mà chat GPT đưa ra mỗi cái thì nó liệt kê đầy đủ logo,|female_1
+wavs/utt_0042.wav|giống như một bản hợp đồng vậy. Và đó là lý do đây là bước quan trọng nhất trong cả quy trình.|female_1
+wavs/utt_0131.wav|không tốn thêm usage cực tiện cho ai thích customization cuối cùng thì đây là thành phẩm với mỗi design system,|female_1
+wavs/utt_0100.wav|núi nhưng nhìn chả rõ và lại cũng không liên quan đến app cho lắm còn logo thứ 2 là direction mình thích nhất các thanh ở phía trên đăng lệch và chưa ổn định rồi dần dần trở nên thẳng hàng và có chất tự hơn ở phía dưới nó diễn|female_1
+wavs/utt_0074.wav|Xuống dưới đây là phần tùy chọn phần này dành cho những bạn đã có sẵn sản phẩm hoặc design system rồi.|female_1
+wavs/utt_0129.wav|mình có thể thay đổi màu, size, hoặc font trực tiếp rồi lưu lại|female_1
+wavs/utt_0038.wav|Vậy Design System, chống AI swap bằng cách nào? Thông thường,|female_1
+wavs/utt_0018.wav|Vào ngày Claw Design ra mắt thì cổ phiếu của Figma đã giảm khoảng 7%,|female_1
+wavs/utt_0030.wav|nên nếu bạn dùng cả ba thì phải để ý một chút. Nhưng mà đừng lo,|female_1
+wavs/utt_0032.wav|Usage cho mọi người Một bước cực quan trọng mà hầu như ai cũng bỏ qua khi thiết kế giao diện chính là Design System.|female_1
+wavs/utt_0120.wav|nhàng hợp với app chứng tỏ claw đã thực sự hiểu hướng thiết kế mình muốn cùng với tinh thần đó thì về bảng màu claw chọn spruce một tông green teal trầm còn accent là amber một|female_1
+wavs/utt_0051.wav|Nhưng về mặt thiết kế thì nó đang rất generic vì hồi xây dựng mình không đưa cho Claw định hướng thiết kế cụ thể nào cả.|female_1
+wavs/utt_0130.wav|tất nhiên thì ở bản hiện tại mình thấy đã ổn rồi nên mình sẽ discard phần chỉnh này mình chỉ demo để cho mọi người thấy thôi và vì đây là mình tự chỉnh tay trên canvas không có sự hỗ trợ của model nên nó|female_1
+wavs/utt_0060.wav|À mà trước khi build các bạn hãy để ý phần Current Session Usage của mình hiện tại đang là 0% để lát các bạn có thể thấy phần tạo Design System tốn bao nhiêu usage.|female_1
+wavs/utt_0085.wav|Về phần prompt thì mình vẫn sẽ đi theo đúng structure lúc nãy tên ứng dụng,|female_1
+wavs/utt_0016.wav|Nó được vận hành bởi Opus, model vision mạnh nhất của Claw.|female_1
+wavs/utt_0064.wav|Đầu tiên là tên của sản phẩm Tiếp theo là một câu ngắn mô tả sản phẩm này dùng để làm gì và vấn đề chính nó đang giải quyết là gì.|female_1
+wavs/utt_0126.wav|ứng dụng của mình thì có dark mode mà nãy mình quên chưa specify nên mình dùng cửa sổ chat bên trái và yêu cầu claw expand mode cho cả dark mode|female_1
+wavs/utt_0133.wav|ở đây thì các bạn có thể thấy homepage của GoStack cùng những tab mình đã mô tả lúc nãy như today,|female_1
+wavs/utt_0031.wav|trong video ngày hôm nay mình sẽ chia sẻ các tips để tối hưu quá.|female_1
+wavs/utt_0041.wav|Còn khi có Design System rồi, thì AI buộc phải làm đúng theo quy tắc thiết kế mà bạn đã đặt ra,|female_1
+wavs/utt_0067.wav|Mình sẽ nhắc đến Weighted Subtask Gant Timeline tự động cập nhật rồi các view như Today,|female_1
+wavs/utt_0036.wav|typography, components như nút bấm, card,|female_1
+wavs/utt_0101.wav|tả khá đúng tinh thần của go stack từ 1 mục tiêu lớn, rơi rạc và khó quản lý mình biết nó thành 1 kế hoạch rõ ràng hơn và nó cũng bám rất sát tagline của app là transform chaos into clarity vì|female_1
+wavs/utt_0004.wav|một công cụ thiết kế bằng AI cực kỳ mạnh mẽ, giúp bạn xây dựng toàn bộ visual direction cho sản phẩm từ typography,|female_1
+wavs/utt_0056.wav|Ở đây thì các bạn có 2 chế độ. Cách đầu tiên thì cho phép bạn tạo trực tiếp trên Claw Design.|female_1
+wavs/utt_0125.wav|nên mình sẽ đưa feedback cho claw sửa thực ra đưa feedback cho design system cũng là một tác vụ khá tồn usage nhưng một khi bạn sửa ở đây thì toàn bộ design system cũng sẽ kế thừa thay đổi đó nên khá là đáng tiền|female_1
+wavs/utt_0050.wav|có cả timeline view và roadmap đầy đủ để người dùng có thể theo dõi tiến độ.|female_1
+wavs/utt_0002.wav|mọi người thường không có định hướng front-end rõ ràng, nên mọi giao diện được AI thiết kế theo cài đặt mặc định.|female_1
+wavs/utt_0052.wav|Nếu để ý kỹ thì các bạn sẽ thấy nó dính đúng mấy dấu hiệu kinh niệm của AISlop như màu chủ đạo là indigo tím,|female_1
+wavs/utt_0003.wav|Để giải quyết vấn đề này thì gần đây Anthropic đã cho ra Claw Design,|female_1
+wavs/utt_0049.wav|Về mặt chức năng thì ứng dụng vẫn khá ổn, có dashboard hiển thị từng mục tiêu và subtasks tương ứng,|female_1
+wavs/utt_0121.wav|điểm mình rất thích ở đây là trong quá trình design claw còn tự validate và tự bắt lỗi trước khi đưa mình kết quả cuối cùng hồi đầu timeline view hiện số lẻ kiểu 1,8 tuần thay vì làm tròn thành 2 nhìn|female_1
+wavs/utt_0102.wav|vậy mình quyết định chọn logo này và đưa vào claw design nói thật thì mình đã thử chạy lại prompt này khá nhiều lần ở cả 2 bên có lần logo ra rất ổn nhưng cũng có lần lỗi tỷ lệ icon khó hiểu hoặc wordmark bị lệch cùng 1 prompt|female_1
+wavs/utt_0014.wav|Đầu tiên, Claw Design là một sản phẩm từ Anthropic Labs cho phép bạn tạo ra landing page,|female_1
+wavs/utt_0072.wav|màu sắc hay phong cách mà do mình còn đang phân vân thì mình sẽ dùng câu nên mấy quyết định thiết kế này thì mình sẽ cùng claw khám phá sau còn bây giờ mình chỉ note đơn giản là muốn phong cách nhẹ nhàng,|female_1
+wavs/utt_0096.wav|sáng tạo và bird generic logo 1 và 2 thì mình thấy không liên quan cho lắm lại còn bị lệch tỷ lệ logo thứ 3 là direction mình thích nhất bên chat GPT các lớp giấy xếp trồng lên nhau khá|female_1
+wavs/utt_0040.wav|nên cái nào nó làm ra cũng giống giống nhau. Chính Anthropic cũng thừa nhận điều này trong tài liệu của họ.|female_1
+wavs/utt_0017.wav|Chính vì vậy, nó có thể hiểu được ngữ cảnh và yêu cầu thiết kế phức tạp.|female_1
+wavs/utt_0081.wav|Thay vì vậy, mình khuyên các bạn nên tạo logo riêng trước bằng claw chat hoặc chat gpt,|female_1
+wavs/utt_0117.wav|components, spacing và type đều là những phần chính một design system cần có mà mình nhắc đến ở đầu video|female_1
+wavs/utt_0076.wav|logo và hình ảnh. Trước đấy thì mình đã gắn link repo của Project GoStack ở đoạn design system mình cho mọi người xem qua nha.|female_1
+wavs/utt_0090.wav|Rồi, về phần setting thì bên chat GPT mình dùng GPT 5.5 để effort cao nhất còn claw mình dùng opus cũng để effort high bạn nào muốn tiết kiệm usage thì giảm effort xuống cũng được nhưng mình|female_1
+wavs/utt_0087.wav|Thêm nữa, các bạn lưu ý phải yêu cầu rõ output là SVG vì SVG có thể scale lên xuống mà không bị vỡ hình sau này đưa vào app,|female_1
+wavs/utt_0065.wav|Ví dụ với GoStack Đây là một app giúp mọi người lập kế hoạch cho những mục tiêu dài hạn như học một kỹ năng mới làm side project,|female_1
+wavs/utt_0021.wav|mà nó tạo ra code thật, tức là HTML, CSS và JavaScript chạy được luôn.|female_1
+wavs/utt_0009.wav|Đây là video tiếp theo trong series hướng dẫn ứng dụng AI agent của mình.|female_1
+wavs/utt_0034.wav|Nó là những bộ quy tắc thiết kế mà Claw sẽ tuân thủ mỗi khi tạo ra bất cứ thứ gì.|female_1
+wavs/utt_0135.wav|là tạo goal mới, tick hoàn thành task mở dashboard và roadmap để track tiến độ và tăng giảm trọng số effort cho từng task và tất nhiên dark mode toggle mình yêu cầu lúc nãy cũng có ở đây|female_1
+wavs/utt_0114.wav|sau đó là visual foundations đây là những quyết định nền tảng như color palette,|female_1
+wavs/utt_0047.wav|slide, post quảng cáo. Rồi, giờ các bạn hãy cùng mình tạo một Design System nha.|female_1
+wavs/utt_0110.wav|thường ở bước này thì claw sẽ hỏi các bạn thêm một số câu hỏi để giúp hệ thống thiết kế rõ ràng hơn nhưng mình nghĩ prompt của mình cũng khá là rõ ràng nên claw bắt tay vào việc luôn quá trình tạo claw design thực ra khá là tốn|female_1
+wavs/utt_0123.wav|hoạt động thế nào chứ không chỉ nhìn một bảng thiết kế tĩnh rất dễ hình dung|female_1
+wavs/utt_0092.wav|Điểm khác biệt đầu tiên mình thấy ở đây là tốc độ chat GPT mất khoảng 4 phút để ra 3 logo kèm SVG code còn claw tốn gần 10 phút và tốn usage hơn hẳn nhưng đổi lại mình thấy claw bám|female_1
+wavs/utt_0106.wav|dưới phần note thì mình cũng sẽ thêm là claw không nhất thiết phải theo đúng bảng màu của logo mình không muốn claw lựa chọn bảng màu dựa vào logo này bởi vì có thể có những direction khác phù hợp với thương hiệu|female_1
+wavs/utt_0109.wav|canvas là nơi các thiết kế sẽ hiện ra các bạn hãy để ý là sau khi nhận phần việc claw đã lên kế hoạch và chia task thành khoảng 9 hạng mục khác nhau giống như một checklist rồi lần lượt build từng phần bình|female_1
+wavs/utt_0098.wav|claw đi theo hướng tối giản và sạch hơn đúng với guideline calm,|female_1
+wavs/utt_0078.wav|layout, accent màu. Tất nhiên direction cũ này mình chắc chắn sẽ không dùng mình chỉ muốn cho mọi người thấy nếu đã có sẵn repo thì claw design có thể tận dụng lại được tới mức nào thôi.|female_1
+wavs/utt_0088.wav|website, favicon hay slide đều tiện hơn rất nhiều và nếu cần chỉnh sửa thì mình cũng dễ edit lại trong figma hoặc illustrator hơn.|female_1
+wavs/utt_0086.wav|app này dùng để làm gì vấn đề nó giải quyết đối tượng người dùng và tagline.|female_1
+wavs/utt_0029.wav|nhưng trong lần cập nhật mới nhất thì usage của nó đã được gộp chung với Claw Chat và Claw Code,|female_1
+wavs/utt_0093.wav|instruction sẽ giảm dài hơn 1 phút nó có bước tự kiểm tra lại nên logo ra thường sạch,|female_1
+wavs/utt_0132.wav|claw còn dựng các phần chữ dựng luôn demo app với bộ quy tắc thiết kế giao diện vừa tạm để các bạn hình dung được end product sẽ trông như thế nào|female_1
+wavs/utt_0024.wav|khác với Claw Chat hay Claw Code. Để hiểu đơn giản thì chat là để trò chuyện,|female_1
+wavs/utt_0073.wav|calm và minimal thôi. Tất cả các prompt trong video ngày hôm nay mình sẽ để dưới phần mô tả cho các bạn nha.|female_1
+wavs/utt_0046.wav|sau đó hệ thống thiết kế này sẽ có thể ứng dụng vào các sản phẩm trong hệ sinh thái của dự án đó như landing page,|female_1
+wavs/utt_0079.wav|Trước khi tiếp tục thì mình muốn nói về logo hiện tại GoStack đã có sẵn logo nhưng nhìn vẫn khá generic chưa thực sự có ý nghĩa và cũng không phù hợp với direction mà mình muốn xây cho app vậy nên mình sẽ tạo một logo mới|female_1
+wavs/utt_0080.wav|tạo logo trực tiếp trong claw design thì khá tốn usage vì mỗi lần generate nó phải dựng cả một giao diện hoàn chỉnh.|female_1
+wavs/utt_0037.wav|thanh đều hướng, và layout, tức là spacing, grid system và bổ cục trang.|female_1
+wavs/utt_0139.wav|giờ nó đã có bản sắc riêng thật ra ban đầu mình định gói gọn tất cả trong một video thôi nhưng để cover hết các use case của claw design thì video phải dài hơn một tiếng mất nên mình quyết định tách ra làm hai phần cho dễ theo dõi|female_1
+wavs/utt_0010.wav|Trong video này, mình sẽ giới thiệu qua về Claw Design để mô xây dựng một design system hoàn chỉnh và dùng nó để thiết kế front-end trong một web app cũng như landing page tương ứng.|female_1
+wavs/utt_0099.wav|minimal mà mình đã đưa từ đầu nhưng đổi lại thì nó hơi an toàn quá logo 1 là các thanh xếp gợi hình ảnh cầu thang hay các level xếp lên nhau dù đúng tinh thần mà lại hơi cliche logo thứ 3 hình mũ tên hoặc đỉnh|female_1
+wavs/utt_0015.wav|prototype, slide, wireframe và animation chỉ bằng cách trò chuyện với Claw.|female_1
+wavs/utt_0068.wav|Dashboard và Roadmap để người dùng theo dõi việc cần làm. Mọi người lưu ý là phần này chỉ cần đủ để claw hiểu product context thôi không cần viết quá dài hoặc giải thích từng feature quá chi tiết vì càng nhét nhiều|female_1
+wavs/utt_0058.wav|Create using Claw Code dành cho các bạn đã có sẵn Design System bài bản trong dự án ví dụ như một thư hiện component riêng.|female_1
+wavs/utt_0005.wav|design system cho đến landing page và prototype. Vậy,|female_1
+wavs/utt_0033.wav|Để hiểu đơn giản thì Design System giống như bộ DNA thương hiệu của bạn.|female_1
+wavs/utt_0077.wav|Như các bạn đã thấy thì claw đọc code và extract ra được design system hiện tại của app với đầy đủ màu,|female_1
+wavs/utt_0044.wav|font, component và layout, và lại còn chạy trên Opus,|female_1
+wavs/utt_0045.wav|một trong những model tốn token nhất của Claw. Điểm cộng là bạn chỉ cần set up một lần trước dự án của mình,|female_1
+wavs/utt_0012.wav|Trong suốt video, mình cũng sẽ chia sẻ các tip để dùng Claw Design hiệu quả mà không bị cạn limit.|female_1
+wavs/utt_0048.wav|Nếu các bạn nhớ thì ở video trước, mình đã xây dựng một productivity web app đơn giản tên là GoStack.|female_1
+wavs/utt_0011.wav|Sau đó là cách kết hợp Claw Design với Claw Code. Và cuối cùng là nói về những giới hạn của Claw Design.|female_1
+wavs/utt_0013.wav|Để làm ra video chi tiết như này thì mình đã tốn khá khá usage, vậy nên mọi người cho mình xin một subscribe nha.|female_1
+wavs/utt_0107.wav|và use case của ứng dụng hơn và mình không muốn giới hạn nó sau đó mình bấm generate|female_1
+wavs/utt_0112.wav|rồi sau tầm 20 phút thì mình đã có một design system hoàn chỉnh dành cho GoStack phần đầu tiên là context và content fundamentals|female_1
+wavs/utt_0027.wav|Claw Design chỉ available cho Pro, Max, Team hoặc Enterprise users,|female_1
+wavs/utt_0019.wav|còn Adobe cũng giảm hơn 1,5%, đủ hiểu nó đáng gồm cỡ nào.|female_1
+wavs/utt_0116.wav|kéo xuống nữa thì các bạn sẽ thấy claw đi vào những phần cụ thể hơn như màu sắc,|female_1
+wavs/utt_0043.wav|Tất nhiên, cái gì tốt thì cũng có quay giá của nó. Đây là bước tổn usage nhất trong Claw Design vì Claw phải dựng cả một hệ thống thiết kế hoàn chỉnh với màu,|female_1
+wavs/utt_0054.wav|Đầu tiên thì các bạn có thể vào claw.ai.design hoặc bấm vào mục Design ở ứng dụng Claw trên máy tính.|female_1
+wavs/utt_0122.wav|không đẹp nó tự phát hiện rồi sửa nên dầu thanh timeline nhìn rất thuận mắt mỗi component ở đây đều có thể tương tác được các bạn có thể bấm vào button form field card hoặc timeline để xem component đó|female_1
+wavs/utt_0020.wav|Thêm một điểm đặc biệt nữa là Claw Design không chỉ generate ảnh tĩnh,|female_1
+wavs/utt_0115.wav|typography, spacing, icon style và cách các thành phần trong giao diện nên được sắp xếp với nhau|female_1
+wavs/utt_0097.wav|đúng tinh thần khá đúng tinh thần stack trong go stack lại còn gợi ấn tượng về 1 ứng dụng productivity slash planning còn đây là 3 direction của claw nhìn chung,|female_1
+wavs/utt_0000.wav|Các bạn có để ý là các website được tạo ra bởi AI đều có aesthetics rất giống nhau,|female_1
+wavs/utt_0111.wav|thời gian dù claw nói là 5 phút nhưng nó lâu hơn nhiều tới đây thì session usage của mình đã tầm 23%|female_1
+wavs/utt_0103.wav|nhưng chạy lại ở các session khác là kết quả đã có thể khác rồi nên nếu mọi người thử lần đầu chưa ra đúng ý thì đừng nản cứ xem output đầu tiên là direction để mình phản hồi tiếp thôi và lúc chỉnh mọi người nhớ feedback thật cụ thể cả|female_1
+wavs/utt_0136.wav|thành phẩm mình thấy rất là đẹp và hợp lý rồi nên mình sẽ publish design system này|female_1
+wavs/utt_0075.wav|Các bạn có thể link code từ GitHub chọn một folder code trên máy upload file Figma hoặc thêm các asset như font,|female_1
+wavs/utt_0137.wav|lưu ý là có publish thì mới tái sử dụng được cho mấy tác vụ sau như landing page nha rồi,|female_1
+wavs/utt_0141.wav|thiết kế giao diện cho ứng dụng và mình cũng sẽ chia sẻ thêm mấy tip để website của bạn nhìn xịn như mấy brand lớn nếu các bạn thấy phần 1 hữu ích thì hãy cho mình xin một like và subscribe nha cảm ơn các bạn|female_1
+wavs/utt_0053.wav|font hệ thống mặc định, logo không có ý nghĩa. Nên hôm nay mình sẽ cho nó một bản sắc riêng bằng cách build một Design System đàng hoàng.|female_1
+wavs/utt_0069.wav|thông tin thì càng tốn input token mà chưa chắc kết quả đã tốt hơn.|female_1
+wavs/utt_0089.wav|Mình cũng sẽ đưa ra một ví dụ về construction technique ở đây là dùng negative space để xây dựng logo với mong muốn là 3 logo sẽ có cấu trúc đa dạng hơn.|female_1
+wavs/utt_0083.wav|Như vậy, mình vừa đỡ tốn usage vừa không bị mất công build cả một design system xong rồi mình nhận ra logo không ổn.|female_1
+wavs/utt_0091.wav|vẫn khuyên dùng opus thay vì sonet vì khả năng vision của nó mạnh hơn.|female_1
+wavs/utt_0025.wav|code là để lập trình, còn Design là nơi bạn làm việc trực quan trên Canvas.|female_1
+wavs/utt_0071.wav|Với GoStack thì mình sẽ dùng câu Transform Chaos into Clarity và cuối cùng các bạn có thể thêm bất kỳ design note nào để claw design tùy chỉnh theo ý mình có thể là font,|female_1
+wavs/utt_0140.wav|ở phần 2, mình sẽ dùng chính design system chúng ta mới thiết kế để tạo một landing page hoàn chỉnh cho GoStack rồi tạo cả slide thuyết chỉnh slash pitch deck sau đó là kết hợp claw code và claw design để|female_1
+wavs/utt_0059.wav|Ở cách này thì các bạn chỉ cần mở ứng dụng trong VS Code rồi chạy lệnh forward slash design sync Claw sẽ tự động đọc token và react components trong dự án của bạn.|female_1
+wavs/utt_0055.wav|Mình sẽ không chọn Template hay Plan Project mà bấm vào mục Design System rồi chọn Create.|female_1
+wavs/utt_0023.wav|bấm vào tương tác được và deploy lên web được luôn. Claw Design là một sản phẩm riêng biệt,|female_1
+wavs/utt_0007.wav|mà ngay cả người mới bắt đầu cũng có thể dễ dàng làm theo. Xin chào các bạn,|female_1
+wavs/utt_0008.wav|mình là Jane, một data scientist đang sinh sống và làm việc tại Úc.|female_1
+wavs/utt_0108.wav|qua đây các bạn sẽ thấy màn hình chính của claw design bên trái sẽ là cửa sổ chat như thường còn bên phải là canvas|female_1
+wavs/utt_0022.wav|Nên cái bạn thấy không phải là một cái ảnh, mà là một giao diện,|female_1
+wavs/utt_0026.wav|Lát nữa thì các bạn sẽ thấy cả ba kết nối với nhau như thế nào. Hiện nay,|female_1
+wavs/utt_0035.wav|Design System định nghĩa sẵn những yếu tố cốt lõi của thương hiệu như bảng màu,|female_1
+wavs/utt_0057.wav|Cũng là cách mình sẽ hướng dẫn các bạn trong ngày hôm nay. Cách thứ 2,|female_1
+wavs/utt_0062.wav|Đây là một phần khá quan trọng nên mình sẽ nói kỹ hơn một chút.|female_1
+wavs/utt_0070.wav|Nếu sản phẩm của các bạn có slogan hoặc tagline thì cũng có thể thêm vào ở đây.|female_1
+wavs/utt_0006.wav|hôm nay mình sẽ hướng dẫn cho các bạn cách sử dụng Claw Design từ A đến Z,|female_1
+wavs/utt_0028.wav|và chỉ chạy trên web và desktop app. Về usage thì trước đây Anthropic có một giới hạn usage riêng dành cho Claw Design mỗi tuần,|female_1
