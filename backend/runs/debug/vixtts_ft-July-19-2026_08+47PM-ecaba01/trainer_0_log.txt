@@ -1,0 +1,19 @@
+ > Training Environment:
+ | > Backend: Torch
+ | > Mixed precision: False
+ | > Precision: float32
+ | > Num. of CPUs: 12
+ | > Num. of Torch Threads: 1
+ | > Torch seed: 1
+ | > Torch CUDNN: True
+ | > Torch CUDNN deterministic: False
+ | > Torch CUDNN benchmark: False
+ | > Torch TF32 MatMul: False
+ > Start Tensorboard: tensorboard --logdir=runs/debug/vixtts_ft-July-19-2026_08+47PM-ecaba01
+
+ > Model has 520210334 parameters
+
+[4m[1m > EPOCH: 0/0[0m
+ --> runs/debug/vixtts_ft-July-19-2026_08+47PM-ecaba01
+
+[1m > TRAINING (2026-07-19 20:47:39) [0m

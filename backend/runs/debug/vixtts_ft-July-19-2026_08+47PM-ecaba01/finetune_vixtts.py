@@ -5,16 +5,11 @@
 models/viXTTS/ (model.pth, config.json, vocab.json). Script tự tải thêm
 dvae.pth + mel_stats.pth từ base coqui/XTTS-v2 nếu thiếu.
 
-Kiểm thử code (không cần GPU lớn):
-  # forward-only, xác minh data→tokenize(vi)→model→loss, vừa VRAM 8GB (nên chạy CPU cho chắc device):
-  CUDA_VISIBLE_DEVICES="" uv run python modules/voice/training/finetune_vixtts.py --dry-run --limit-samples 8
-  # chạy thử 1-batch có optimizer trên CPU (chậm, cần ~10GB RAM):
-  CUDA_VISIBLE_DEVICES="" uv run python modules/voice/training/finetune_vixtts.py --debug
-
-Chạy thật (GPU lớn, vd A6000 48GB) — chạy từ thư mục backend/:
-  uv run python modules/voice/training/finetune_vixtts.py --epochs 30 --batch-size 4
+Chạy (GPU lớn, vd A6000 48GB):
+  cd backend
+  uv run python finetune_vixtts.py --epochs 30 --batch-size 4
   # sau khi train xong -> export thành model dùng được:
-  uv run python modules/voice/training/export_vixtts.py --run runs/vixtts_ft --out models/viXTTS-ft
+  uv run python export_vixtts.py --run runs/vixtts_ft --out models/viXTTS-ft
 
 VRAM tham khảo (batch 4, fp32): ~18–22GB. A6000/48GB dư sức, có thể tăng --batch-size.
 Mốc VRAM theo GPU:
@@ -106,9 +101,6 @@ def main() -> None:
     ap.add_argument("--debug", action="store_true",
                     help="Chạy kiểm thử code 1-batch: 1 epoch, ít mẫu, save ngay, bỏ synth test. "
                          "Nên kèm CUDA_VISIBLE_DEVICES='' để chạy CPU, tránh OOM trên GPU 8GB.")
-    ap.add_argument("--dry-run", action="store_true",
-                    help="Chỉ nạp model + 1 batch + forward ra loss (KHÔNG optimizer/backward) → "
-                         "vừa VRAM 8GB, xác minh đường data→model→loss trước khi lên GPU lớn.")
     args = ap.parse_args()
 
     if args.debug:
@@ -202,27 +194,6 @@ def main() -> None:
         eval_samples = eval_samples[: max(2, args.limit_samples // 3)]
     print(f"[ft] train={len(train_samples)} eval={len(eval_samples)} | epochs={args.epochs} "
           f"batch={args.batch_size} grad_accum={args.grad_accum} debug={args.debug}")
-
-    if args.dry_run:
-        import torch
-
-        dev = "cuda" if torch.cuda.is_available() else "cpu"
-        print(f"[ft] DRY-RUN: forward-only trên {dev} (không optimizer/backward)")
-        model = model.to(dev)
-        model.eval()
-        loader = model.get_data_loader(
-            config, {}, is_eval=False, samples=train_samples, verbose=True, num_gpus=1, rank=0
-        )
-        batch = next(iter(loader))
-        batch = model.format_batch_on_device(batch)
-        with torch.no_grad():
-            _, loss_dict = model.train_step(batch, criterion=None)
-        losses = {k: round(float(v), 4) for k, v in loss_dict.items()
-                  if hasattr(v, "item") or isinstance(v, (int, float))}
-        print(f"[ft] ✅ DRY-RUN OK — forward chạy được, loss: {losses}")
-        print("[ft] Đường data→tokenize(vi)→model→loss OK. Optimizer/backward là code coqui chuẩn, "
-              "sẽ chạy trên GPU lớn. Bê lên A6000 và bỏ --dry-run.")
-        return
 
     trainer = Trainer(
         TrainerArgs(grad_accum_steps=args.grad_accum),

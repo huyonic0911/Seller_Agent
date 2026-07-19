@@ -52,9 +52,9 @@ class SellerBrain:
         )
 
     def warmup(self) -> None:
-        """Nạp sẵn model RAG (bge-m3) lúc start server thay vì nạp lười ở query đầu.
+        """Nạp sẵn model RAG (bge-m3) khi start server.
 
-        Chạy đồng bộ (CPU-heavy ~vài giây) — gọi trong thread ở lifespan để không chặn.
+        Chạy đồng bộ (CPU-heavy) — gọi trong thread ở lifespan để không chặn.
         """
         if self._retriever is None:
             return
