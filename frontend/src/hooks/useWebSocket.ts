@@ -10,6 +10,8 @@ export type StreamMessage =
       text: string;
       audio: string;
       audio_format: string;
+      emotion?: string;
+      visemes?: { t: number; v: number }[];
     }
   | { type: "error"; author?: string; comment?: string; message: string };
 

@@ -8,9 +8,7 @@ export const config = {
   wsComments: `ws://${BACKEND_HOST}/ws/comments`,
   httpBase: `http://${BACKEND_HOST}`,
 
-  // Live2D: bật khi đã đặt model vào public/models và có Cubism Core.
-  // Mặc định false → dùng avatar SVG có nhép miệng, chạy được ngay.
-  useLive2D: (import.meta.env.VITE_USE_LIVE2D ?? "false") === "true",
-  // Đường dẫn model .model3.json (Cubism 4) hoặc .model.json (Cubism 2)
-  live2dModel: import.meta.env.VITE_LIVE2D_MODEL ?? "/models/hiyori/hiyori_pro_t11.model3.json",
+  // Avatar VRM (three.js + three-vrm). Thiết kế nhân vật trong VRoid Studio, export
+  // .vrm rồi đặt vào frontend/public/models/ và trỏ VITE_VRM_MODEL tới file đó.
+  vrmModel: import.meta.env.VITE_VRM_MODEL ?? "/models/avatar.vrm",
 };

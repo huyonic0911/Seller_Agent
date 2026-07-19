@@ -24,6 +24,23 @@ class Retriever:
         if self._vs is None:
             self._vs = VectorStore(self._embedder.dim)
 
+    def warmup(self) -> None:
+        """Nạp sẵn bge-m3 + kiểm tra Qdrant NGAY lúc start server (tránh nạp lười ở query đầu)."""
+        self._embedder.ensure_loaded()  # <- nạp embedding model ngay bây giờ
+        self._ensure()
+        if not self._vs.ready():
+            logger.warning(
+                "Qdrant chưa kết nối được (%s) — RAG sẽ lùi full catalog tới khi Qdrant chạy.",
+                settings.qdrant_url or settings.qdrant_path,
+            )
+        elif not self._vs.exists():
+            logger.warning(
+                "Qdrant thiếu collection '%s' — chạy `python -m modules.llm.ingest` để nạp dữ liệu.",
+                settings.qdrant_collection,
+            )
+        else:
+            logger.info("RAG sẵn sàng: %d sản phẩm trong Qdrant.", self._vs.count())
+
     def search(self, query: str, top_k: int | None = None) -> list[dict]:
         self._ensure()
         top_k = top_k or settings.rag_top_k

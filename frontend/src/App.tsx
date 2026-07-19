@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AdminPanel } from "./components/AdminPanel";
 import { ChatItem, ChatOverlay } from "./components/ChatOverlay";
-import { Live2DStage } from "./components/Live2DStage";
+import { AvatarStage } from "./components/AvatarStage";
 import { config } from "./config";
 import { useCommentSender, useStreamSocket, StreamMessage } from "./hooks/useWebSocket";
 import { AudioLipSync } from "./lib/lipsync";
@@ -13,10 +13,11 @@ export default function App() {
   const [items, setItems] = useState<ChatItem[]>([]);
   const [currentReply, setCurrentReply] = useState<string | null>(null);
   const [speaking, setSpeaking] = useState(false);
+  const [emotion, setEmotion] = useState("neutral");
   const [audioReady, setAudioReady] = useState(false);
 
   // Hàng đợi phát audio: reply tới liên tục, phát tuần tự từng câu.
-  const queueRef = useRef<{ text: string; audio: string }[]>([]);
+  const queueRef = useRef<{ text: string; audio: string; emotion: string }[]>([]);
   const playingRef = useRef(false);
 
   const pushItem = (it: Omit<ChatItem, "id">) =>
@@ -28,6 +29,7 @@ export default function App() {
     while (queueRef.current.length) {
       const next = queueRef.current.shift()!;
       setCurrentReply(next.text);
+      setEmotion(next.emotion);
       setSpeaking(true);
       try {
         if (next.audio) await lipSync.play(next.audio);
@@ -38,6 +40,7 @@ export default function App() {
       setSpeaking(false);
     }
     setCurrentReply(null);
+    setEmotion("neutral"); // hết hàng đợi → về biểu cảm trung tính
     playingRef.current = false;
   }, [lipSync]);
 
@@ -47,7 +50,7 @@ export default function App() {
         pushItem({ kind: "comment", author: m.author, text: m.text });
       } else if (m.type === "reply") {
         pushItem({ kind: "reply", author: m.author, comment: m.comment, text: m.text });
-        queueRef.current.push({ text: m.text, audio: m.audio });
+        queueRef.current.push({ text: m.text, audio: m.audio, emotion: m.emotion ?? "neutral" });
         void drain();
       } else if (m.type === "error") {
         pushItem({ kind: "error", text: m.message });
@@ -79,7 +82,7 @@ export default function App() {
       </header>
 
       <main className="live-area">
-        <Live2DStage lipSync={lipSync} speaking={speaking} />
+        <AvatarStage lipSync={lipSync} speaking={speaking} emotion={emotion} />
         <ChatOverlay items={items} currentReply={currentReply} />
       </main>
 

@@ -1,0 +1,56 @@
+# Seller Agent — backend (GPU/viXTTS) + Qdrant.
+# Ollama giữ Ở HOST: backend gọi qua host.docker.internal:11434.
+#
+# Chạy:   docker compose up -d --build
+# Nạp RAG (1 lần):  docker compose exec backend python -m modules.llm.ingest
+# Yêu cầu host: NVIDIA driver + nvidia-container-toolkit (cho GPU passthrough).
+
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: seller-qdrant
+    ports:
+      - "6333:6333" # REST/gRPC HTTP
+      - "6334:6334" # gRPC
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: seller-backend
+    depends_on:
+      - qdrant
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env # cấu hình gốc (TTS_ENGINE, VIXTTS_*, LLM_MODEL...)
+    environment:
+      # Ghi đè cho môi trường container (thắng giá trị trong .env):
+      - QDRANT_URL=http://qdrant:6333 # tới service qdrant, không phải localhost
+      - OPENAI_BASE_URL=http://host.docker.internal:11434/v1 # Ollama trên host
+      - EMBED_DEVICE=cpu # bge-m3 chạy CPU, nhường VRAM cho viXTTS
+      - VIXTTS_DEVICE=cuda
+      - HF_HOME=/models/hf-cache
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # cho phép gọi Ollama ở host trên Linux
+    volumes:
+      # Model/asset lớn mount từ host (không bake vào image):
+      - ./backend/models:/app/models
+      - ./backend/voices:/app/voices
+      - ./backend/data:/app/data
+      - hf_cache:/models/hf-cache # cache bge-m3 (~2.2GB) — tải 1 lần, dùng lại
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+
+volumes:
+  qdrant_storage:
+  hf_cache:

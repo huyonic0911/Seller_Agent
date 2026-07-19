@@ -1,19 +1,31 @@
-# Live2D models
+# Avatar models (VRM)
 
-Mặc định app dùng avatar SVG (không cần model). Để bật Live2D thật:
+App render avatar bằng **VRM** (three.js + `@pixiv/three-vrm`) — nhân vật anime 3D
+toon (2.5D). File `.vrm` **không commit** vào git (nặng, xem `.gitignore`).
 
-1. Tải một model Cubism 4 miễn phí, ví dụ **Hiyori** từ bộ sample chính thức của Live2D
-   (https://www.live2d.com/en/learn/sample/) hoặc các model free khác.
-2. Giải nén vào thư mục này, ví dụ: `public/models/hiyori/hiyori_pro_t11.model3.json` (kèm textures, `.moc3`, `.motion3.json`).
-3. Tạo file `frontend/.env`:
+## Dùng nhân vật của bạn (khuyến nghị)
+
+1. Tải **VRoid Studio** (miễn phí): https://vroid.com/en/studio
+2. Thiết kế cô gái anime theo ý bạn, rồi **Export → VRM**.
+3. Lưu file vào đây với tên `avatar.vrm`:
 
    ```
-   VITE_USE_LIVE2D=true
-   VITE_LIVE2D_MODEL=/models/hiyori/hiyori_pro_t11.model3.json
+   frontend/public/models/avatar.vrm
    ```
 
-4. Chạy lại `npm run dev`.
+4. (Tùy chọn) trỏ đường dẫn khác qua `frontend/.env`:
 
-> Cubism Core runtime đã được nhúng qua `<script>` trong `index.html`.
-> Lip-sync điều khiển tham số `ParamMouthOpenY` — tên tham số có thể khác tùy model,
-> chỉnh trong `src/lib/live2d.ts` nếu cần.
+   ```
+   VITE_VRM_MODEL=/models/ten-file.vrm
+   ```
+
+5. Chạy lại `npm run dev`.
+
+## Ghi chú kỹ thuật
+
+- Lip-sync điều khiển expression preset **`aa`** (độ mở miệng) theo biên độ audio.
+- Cảm xúc map 6 nhãn backend → preset VRM (happy/sad/relaxed/surprised…), xem
+  `EMOTION_TO_VRM` trong `src/lib/vrm.ts`.
+- Chớp mắt / thở / lắc đầu nhẹ được drive thủ công trong `src/lib/vrm.ts`.
+- VRM nên có đủ các expression preset chuẩn để cảm xúc & khẩu hình hoạt động —
+  VRoid Studio export sẵn các preset này.

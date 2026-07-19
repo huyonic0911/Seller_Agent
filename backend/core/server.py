@@ -1,6 +1,7 @@
 """FastAPI app: WebSocket cho comment (vào) và stream phản hồi (ra) + REST tiện ích."""
 from __future__ import annotations
 
+import asyncio
 import contextlib
 import logging
 
@@ -23,6 +24,8 @@ async def lifespan(app: FastAPI):
     store = ProductStore(settings.products_path)
     source = SimulatedCommentSource()
     brain = SellerBrain(store)
+    # Nạp sẵn bge-m3 (RAG) ngay lúc start, chạy trong thread để không chặn event loop.
+    await asyncio.to_thread(brain.warmup)
     tts = TTSEngine()
     hub = StreamHub()
     pipeline = AnswerPipeline(source, brain, tts, hub)

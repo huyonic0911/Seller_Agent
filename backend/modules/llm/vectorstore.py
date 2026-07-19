@@ -61,3 +61,11 @@ class VectorStore:
             return self._client.collection_exists(self.collection)
         except Exception:
             return False
+
+    def ready(self) -> bool:
+        """True nếu kết nối được Qdrant (probe mạng thật, không nuốt lỗi như exists())."""
+        try:
+            self._client.get_collections()
+            return True
+        except Exception:
+            return False

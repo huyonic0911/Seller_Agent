@@ -64,33 +64,103 @@ body {
 }
 
 .stage {
+  position: relative;
   width: min(70vw, 520px);
   height: min(70vh, 640px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.live2d-canvas {
+.vrm-canvas {
   width: 100%;
   height: 100%;
+  display: block;
 }
-.svg-avatar {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.4));
+.stage-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  color: #c9cbe6;
+  font-size: 14px;
+  padding: 16px;
 }
-.svg-avatar.speaking .eyes {
-  animation: blink 3.5s infinite;
+.stage-error {
+  color: #ff9aa8;
 }
-@keyframes blink {
-  0%,
-  92%,
-  100% {
-    transform: scaleY(1);
-  }
-  95% {
-    transform: scaleY(0.1);
-  }
+.stage-error code {
+  color: #ffd6dc;
+  font-size: 12px;
+}
+
+.action-bar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 3;
+}
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  background: rgba(20, 22, 44, 0.6);
+  backdrop-filter: blur(6px);
+  color: #e8e9f5;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.action-btn:hover {
+  background: rgba(60, 64, 110, 0.75);
+}
+.action-btn:active {
+  transform: scale(0.95);
+}
+.action-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.zoom-bar {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 3;
+}
+.zoom-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  background: rgba(20, 22, 44, 0.6);
+  backdrop-filter: blur(6px);
+  color: #e8e9f5;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.zoom-btn:hover {
+  background: rgba(60, 64, 110, 0.75);
+}
+.zoom-btn:active {
+  transform: scale(0.95);
 }
 
 .chat-overlay {

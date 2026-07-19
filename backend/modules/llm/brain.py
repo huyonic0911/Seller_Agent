@@ -51,6 +51,18 @@ class SellerBrain:
             self.provider, settings.model, "on" if self._retriever else "off",
         )
 
+    def warmup(self) -> None:
+        """Nạp sẵn model RAG (bge-m3) lúc start server thay vì nạp lười ở query đầu.
+
+        Chạy đồng bộ (CPU-heavy ~vài giây) — gọi trong thread ở lifespan để không chặn.
+        """
+        if self._retriever is None:
+            return
+        try:
+            self._retriever.warmup()
+        except Exception as exc:
+            logger.warning("Warmup RAG lỗi (%s) → sẽ nạp lười khi cần.", exc)
+
     # ---- Dựng phần tham chiếu (RAG top-k hoặc full catalog) --------------
     def _build_reference(self, query: str) -> str:
         if self._retriever is not None:

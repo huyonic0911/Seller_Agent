@@ -30,7 +30,12 @@ class AvatarConfig:
 
 
 def get_avatar_config() -> AvatarConfig:
-    mouth = "ParamMouthOpenY" if settings.avatar_type in {"live2d", "svg"} else "jawOpen"
+    if settings.avatar_type == "vrm":
+        mouth = "aa"  # VRM: expression preset khẩu hình "aa" (độ mở miệng)
+    elif settings.avatar_type in {"live2d", "svg"}:
+        mouth = "ParamMouthOpenY"
+    else:
+        mouth = "jawOpen"
     return AvatarConfig(
         type=settings.avatar_type,
         model=settings.avatar_model,

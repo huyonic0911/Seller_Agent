@@ -98,10 +98,10 @@ class Settings:
     )
 
     # --- Vision (avatar) ---
-    # Kiểu avatar: "svg" (mặc định frontend) | "live2d" (2D) | "3d" (chuẩn bị)
-    avatar_type: str = field(default_factory=lambda: os.getenv("AVATAR_TYPE", "live2d").lower())
-    # Định danh/đường dẫn model cho frontend nạp (Live2D .model3.json hoặc model 3D)
-    avatar_model: str = field(default_factory=lambda: os.getenv("AVATAR_MODEL", ""))
+    # Kiểu avatar: "vrm" (3D toon, mặc định) | "live2d" (2D) | "svg"
+    avatar_type: str = field(default_factory=lambda: os.getenv("AVATAR_TYPE", "vrm").lower())
+    # Đường dẫn model cho frontend nạp (VRM .vrm, hoặc Live2D .model3.json)
+    avatar_model: str = field(default_factory=lambda: os.getenv("AVATAR_MODEL", "/models/avatar.vrm"))
     # Backend có sinh sẵn khung nhép miệng (viseme) từ audio để gửi kèm không
     viseme_enabled: bool = field(default_factory=lambda: _get_bool("VISEME_ENABLED", True))
     viseme_fps: int = field(default_factory=lambda: int(os.getenv("VISEME_FPS", "30")))

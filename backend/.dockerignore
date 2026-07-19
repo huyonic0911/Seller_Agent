@@ -1,0 +1,23 @@
+# Không đưa vào build context (nặng/không cần — mount lúc chạy hoặc bí mật).
+.venv/
+**/__pycache__/
+*.pyc
+.git/
+
+# Bí mật: .env nạp qua env_file lúc chạy, không bake vào image.
+.env
+*.env
+!.env.example
+
+# Model/asset lớn — mount từ host qua docker-compose.
+models/
+voices/
+dataset/
+runs/
+piper/
+piper.tar.gz
+*.wav
+*.tar.gz
+logs/
+qdrant_storage/
+qdrant_data/
