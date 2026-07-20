@@ -194,6 +194,13 @@ def main() -> None:
     )
 
     model = GPTTrainer.init_from_config(config)
+    # XTTS gốc KHÔNG liệt kê 'vi' trong config.languages → synthesize() (được test_run gọi để
+    # đọc thử test_sentences khi eval) sẽ assert fail. Tokenizer đã được vá 'vi' riêng ở trên,
+    # nên chỉ cần khai báo 'vi' là ngôn ngữ hợp lệ để synth test tiếng Việt chạy được.
+    for _cfg in (getattr(model, "config", None), getattr(getattr(model, "xtts", None), "config", None)):
+        _langs = getattr(_cfg, "languages", None)
+        if isinstance(_langs, list) and "vi" not in _langs:
+            _langs.append("vi")
     train_samples, eval_samples = load_tts_samples(
         [dataset_cfg], eval_split=True, eval_split_max_size=256, eval_split_size=0.05
     )
@@ -214,6 +221,9 @@ def main() -> None:
             config, {}, is_eval=False, samples=train_samples, verbose=True, num_gpus=1, rank=0
         )
         batch = next(iter(loader))
+        # format_batch_on_device chạy dvae (đã ở dev) trên batch → phải đưa batch lên dev trước,
+        # nếu không sẽ lệch device (Trainer thật tự làm bước này).
+        batch = {k: (v.to(dev) if torch.is_tensor(v) else v) for k, v in batch.items()}
         batch = model.format_batch_on_device(batch)
         with torch.no_grad():
             _, loss_dict = model.train_step(batch, criterion=None)

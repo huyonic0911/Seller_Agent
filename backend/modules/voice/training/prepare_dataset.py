@@ -57,6 +57,10 @@ def main() -> None:
     ap.add_argument("--whisper-model", default="large-v3", help="large-v3 | medium | small")
     ap.add_argument("--whisper-device", default="auto", help="auto | cuda | cpu")
     ap.add_argument("--min-chars", type=int, default=6, help="Bỏ đoạn có transcript quá ngắn")
+    ap.add_argument("--ref-out", default="voices/{speaker}_ref.wav",
+                    help="Tự xuất 1 clip ~6s làm mẫu giọng (speaker_wav) cho inference. "
+                         "'' = tắt. {speaker} thay bằng tên speaker.")
+    ap.add_argument("--ref-target", type=float, default=6.0, help="Độ dài mẫu giọng mong muốn (s)")
     args = ap.parse_args()
 
     if not os.path.isfile(args.src):
@@ -157,11 +161,26 @@ def main() -> None:
     total_dur = sum(
         sf.info(os.path.join(args.out, af)).duration for af, _ in rows
     )
+
+    # 6) Xuất mẫu giọng (speaker_wav) từ dataset MỚI này — chọn clip gần --ref-target nhất.
+    #    BẮT BUỘC làm ở đây: viXTTS clone giọng theo file reference lúc inference, nên khi
+    #    đổi audio nguồn thì reference cũng phải đổi theo (không thì export/synth ra giọng cũ).
+    ref_msg = "reference: (tắt)"
+    if args.ref_out:
+        ref_path = args.ref_out.replace("{speaker}", args.speaker)
+        durs = [(af, sf.info(os.path.join(args.out, af)).duration) for af, _ in rows]
+        chosen, cdur = min(durs, key=lambda x: abs(x[1] - args.ref_target))
+        os.makedirs(os.path.dirname(ref_path) or ".", exist_ok=True)
+        import shutil
+        shutil.copyfile(os.path.join(args.out, chosen), ref_path)
+        ref_msg = f"reference: {ref_path}  (từ {chosen}, {cdur:.2f}s)"
+
     log("──────────────────────────────────────────")
     log(f"✅ Dataset: {args.out}/")
     log(f"   clip giữ lại : {kept}  (train {len(train_rows)} / eval {len(eval_rows)})")
     log(f"   tổng thời lượng giọng: {total_dur / 60:.1f} phút")
     log(f"   metadata_train.csv / metadata_eval.csv (audio_file|text|speaker_name)")
+    log(f"   {ref_msg}")
     log("👉 Kiểm tra vài dòng metadata + nghe thử 1-2 wav trước khi train.")
 
 

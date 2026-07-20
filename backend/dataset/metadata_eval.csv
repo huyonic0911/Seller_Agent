@@ -1,8 +1,10 @@
 audio_file|text|speaker_name
-wavs/utt_0104.wav|claw và chat gpt đều sửa sbg khá nhanh khi instruction của mình đủ rõ rồi giờ đã có logo quay trở lại màn hình claw design|female_1
-wavs/utt_0113.wav|phần này đơn giản là claw tóm tắt lại GoStack là app gì dành cho ai và cảm giác product này nên mang lại|female_1
-wavs/utt_0084.wav|Tip này thì đặc biệt phù hợp với các bạn pro users nha. Tất nhiên mỗi model sẽ cho ra một kết quả khác nhau nên hôm nay mình sẽ demo cả 2 cùng một prompt để các bạn thấy sự khác biệt.|female_1
-wavs/utt_0063.wav|Để Claw hiểu đúng sản phẩm và build ra Design System sát với nhu cầu của mình nhất Claw mà đây nên có khoảng 5 phần chính.|female_1
-wavs/utt_0039.wav|khi bạn không đưa ra định hướng thiết kế cụ thể thì AI sẽ chọn phương án giao diện phổ biến và an toàn nhất,|female_1
-wavs/utt_0105.wav|mình sẽ thêm file logo lúc nãy vào lưu ý là logo thôi chứ đừng thêm logo có wordmark nha|female_1
-wavs/utt_0082.wav|thử vài direction khác nhau. Khi đã chọn đường hướng phù hợp thì hãy mang logo đó vào claw design sau.|female_1
+wavs/utt_0002.wav|mọi người thường không có định hướng front-end rõ ràng, nên mọi giao diện được AI thiết kế theo cài đặt mặc định.|female_1
+wavs/utt_0064.wav|Tiếp theo là một câu ngắn mô tả sản phẩm này dùng để làm gì, và vấn đề chính nó đang giải quyết là gì.|female_1
+wavs/utt_0012.wav|Trong suốt video, mình cũng sẽ chia sẻ các tip để dùng Claw Design hiệu quả mà không bị cạn limit.|female_1
+wavs/utt_0185.wav|nên mình quyết định tách ra làm 2 phần cho dễ theo dõi. Ở phần 2,|female_1
+wavs/utt_0090.wav|thử vài direction khác nhau. Khi đã chọn đường hướng phù hợp thì hãy mang logo đó vào Claw design sau.|female_1
+wavs/utt_0036.wav|typography, components như nút bấm, card,|female_1
+wavs/utt_0179.wav|và tăng giảm trọng số effort cho từng task. Và tất nhiên,|female_1
+wavs/utt_0186.wav|mình sẽ dùng chính Design System chúng ta mới thiết kế để tạo một landing page hoàn chỉnh cho GoStack,|female_1
+wavs/utt_0073.wav|Nếu sản phẩm của các bạn có slogan hoặc tagline thì cũng có thể thêm vào ở đây.|female_1

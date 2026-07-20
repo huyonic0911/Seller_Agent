@@ -19,7 +19,7 @@ import shutil
 import sys
 
 BASE_DIR = "models/viXTTS"  # nguồn config.json + vocab.json
-
+# BASE_DIR = "runs/vixtts_ft/vixtts_ft-July-20-2026_03+22PM-2f9822c"
 
 def patch_vietnamese_tokenizer() -> None:
     import re
@@ -89,6 +89,19 @@ def main() -> None:
         if not os.path.isfile(src):
             sys.exit(f"❌ Thiếu {src} ở model gốc.")
         shutil.copy2(src, os.path.join(args.out, fn))
+    # 2b) Thêm 'vi' vào config.languages: XTTS gốc không liệt kê 'vi' nên synthesize()
+    #     sẽ assert fail nếu runtime dùng đường synthesize thay vì inference. Tokenizer 'vi'
+    #     được vá lúc chạy; đây chỉ khai báo ngôn ngữ hợp lệ để không bị chặn.
+    import json
+    cfg_out = os.path.join(args.out, "config.json")
+    with open(cfg_out, encoding="utf-8") as f:
+        cfg_json = json.load(f)
+    langs = cfg_json.get("languages")
+    if isinstance(langs, list) and "vi" not in langs:
+        langs.append("vi")
+        with open(cfg_out, "w", encoding="utf-8") as f:
+            json.dump(cfg_json, f, ensure_ascii=False, indent=4)
+        print("[export] + thêm 'vi' vào config.languages")
     print(f"[export] ✅ đã tạo {args.out}/ (model.pth + config.json + vocab.json)")
 
     if args.no_test:
